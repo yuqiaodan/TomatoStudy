@@ -1,0 +1,118 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+
+    useLibrary 'org.apache.http.legacy'
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        applicationId "safetytaxfree.de.testmytomato"
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
+        testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "boolean", "USE_CANARY", "true"
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            buildConfigField "boolean", "USE_CANARY", "false"
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        disable 'InvalidPackage'
+        disable "ResourceType"
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'me.jessyan:arms:2.5.2'
+    implementation 'me.jessyan:arms-imageloader-glide:2.5.2'
+
+    //view
+    implementation rootProject.ext.dependencies["autosize"]
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
+        exclude module: 'support-annotations'
+    }
+    //添加smartrefresh 用于上拉请求更多和下拉刷新
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
+    //（1.0.5及以前版本的老用户升级需谨慎，API改动过大）
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0'  //没有使用特殊Header，可以不加这行
+
+    //基础工具库
+    implementation "com.github.tamsiree.RxTool:RxKit:2.3.9"
+
+    //UI库
+    implementation "com.github.tamsiree.RxTool:RxUI:2.3.9"
+
+    //相机库
+    implementation "com.github.tamsiree.RxTool:RxCamera:2.3.9"
+
+    //功能库（Zxing扫描与生成二维码条形码 支付宝 微信）
+    implementation "com.github.tamsiree.RxTool:RxFeature:2.3.9"
+
+    //ArcGis For Android工具库（API：100.1以上版本）
+    implementation "com.github.tamsiree.RxTool:RxArcGisKit:2.3.9"
+
+    implementation 'com.android.support:multidex:1.0.3'
+    //RxTool中用到了CardView 导入
+    //noinspection GradleCompatible
+    implementation 'com.android.support:cardview-v7:28.0.0'
+
+    implementation 'com.android.support:design:28.0.0'
+    //Gson  retrofit添加Gson数据解析器
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    //RxJava2 Adapter  retrofit结合rxjava使用的calladapter
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.3.0"
+    //导入BGAbanner2.2.6
+    implementation 'com.android.support:support-v4:2.2.6'
+    implementation 'cn.bingoogolapple:bga-banner:2.2.6@aar'
+
+    //导入媒体播放框架exopl  2.10.4最新版 但不支持 故导入2.9.0
+    implementation 'com.google.android.exoplayer:exoplayer:2.9.0'
+
+    implementation 'com.jph.takephoto:takephoto_library:4.0.3'
+//自定义相机
+    implementation 'com.otaliastudios:cameraview:1.6.1'
+    //zxing
+    implementation 'me.dm7.barcodescanner:zxing:1.9.8'//'me.dm7.barcodescanner:zbar:1.9'
+    //tools
+    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
+
+    //注意 Arms 核心库现在并不会依赖某个 EventBus, 要想使用 EventBus, 还请在项目中自行依赖对应的 EventBus
+    //现在支持两种 EventBus, greenrobot 的 EventBus 和畅销书 《Android源码设计模式解析与实战》的作者 何红辉 所作的 AndroidEventBus
+    //依赖后 Arms 会自动检测您依赖的 EventBus 并自动注册
+    //建议使用 AndroidEventBus, 特别是组件化项目, 原因请看 https://github.com/hehonghui/AndroidEventBus/issues/49
+    //这种做法可以让使用者有自行选择三方库的权利, 并且还可以减轻 Arms 的体积
+    implementation rootProject.ext.dependencies["androideventbus"]
+//    implementation rootProject.ext.dependencies["eventbus"]
+
+    //test
+    debugImplementation rootProject.ext.dependencies["canary-debug"]
+    releaseImplementation rootProject.ext.dependencies["canary-release"]
+    testImplementation rootProject.ext.dependencies["canary-release"]
+    testImplementation rootProject.ext.dependencies["junit"]
+
+}

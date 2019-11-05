@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="swust.yuqiaodan.tomatoapp.mvp.ui.activity.MyTakePhotoActivity">
+
+    <ImageView
+        android:id="@+id/photo_image"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_margin="30dp"
+        android:scaleType="fitCenter"
+        />
+    <Button
+        android:id="@+id/takephoto1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Takephoto_Library"
+        android:textAllCaps="false"
+        />
+    <Button
+        android:id="@+id/takephoto2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Takephoto_Activity"
+        android:textAllCaps="false"
+        />
+    <TextView
+        android:id="@+id/image_local"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        />
+</LinearLayout>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    >
+
+
+    <ImageView
+        android:id="@+id/sing_img"
+        android:layout_margin="10dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@color/blackblue"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/songname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="平凡之路"
+            android:textSize="18dp"
+            android:textColor="@color/blackblue"
+            android:layout_marginBottom="10dp"
+            />
+
+        <TextView
+            android:id="@+id/singername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="朴树"
+            android:textSize="12dp"
+            android:textColor="@color/singername"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
