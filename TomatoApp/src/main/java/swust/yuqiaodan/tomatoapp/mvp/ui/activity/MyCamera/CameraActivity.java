@@ -1,5 +1,4 @@
-package swust.yuqiaodan.tomatoapp.mvp.ui.activity;
-import android.content.pm.ActivityInfo;
+package swust.yuqiaodan.tomatoapp.mvp.ui.activity.MyCamera;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,7 +7,6 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 import com.otaliastudios.cameraview.CameraListener;

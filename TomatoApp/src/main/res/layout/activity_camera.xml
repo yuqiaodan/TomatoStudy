@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="swust.yuqiaodan.tomatoapp.mvp.ui.activity.CameraActivity">
+    tools:context="swust.yuqiaodan.tomatoapp.mvp.ui.activity.MyCamera.CameraActivity">
 
 
     <com.otaliastudios.cameraview.CameraView

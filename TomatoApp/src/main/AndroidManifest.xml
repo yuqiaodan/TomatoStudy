@@ -20,11 +20,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".mvp.ui.activity.ScanQRActivity"></activity>
+        <service
+            android:name=".mvp.ui.activity.ServiceStudy.MyFirstService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <activity android:name=".mvp.ui.activity.ServiceStudy.ServiceStudyActivity" />
+        <activity android:name=".mvp.ui.activity.ScanQRActivity" />
         <activity android:name=".mvp.ui.activity.LayoutStudy.RelativeLayoutTestActivity" />
         <activity android:name=".mvp.ui.activity.LayoutStudy.ConstraintLayoutTestActivity" />
         <activity
-            android:name=".mvp.ui.activity.CameraActivity"
+            android:name=".mvp.ui.activity.MyCamera.CameraActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".mvp.ui.activity.MyTakePhotoActivity" />
         <activity android:name=".mvp.ui.activity.MusicListDetaActivity" />

@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -18,7 +17,6 @@ import com.bumptech.glide.Glide;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.jph.takephoto.app.TakePhoto;
-import com.jph.takephoto.app.TakePhotoActivity;
 import com.jph.takephoto.app.TakePhotoImpl;
 import com.jph.takephoto.model.InvokeParam;
 import com.jph.takephoto.model.TContextWrap;
@@ -32,7 +30,7 @@ import java.io.File;
 import butterknife.BindView;
 import butterknife.OnClick;
 import swust.yuqiaodan.tomatoapp.R;
-import timber.log.Timber;
+import swust.yuqiaodan.tomatoapp.mvp.ui.activity.MyCamera.CameraActivity;
 
 public class MyTakePhotoActivity extends BaseActivity implements TakePhoto.TakeResultListener,InvokeListener{
     @BindView(R.id.takephoto1)
@@ -71,7 +69,7 @@ public class MyTakePhotoActivity extends BaseActivity implements TakePhoto.TakeR
                 startTakephoto();
                 break;
             case R.id.takephoto2:
-                Intent intent=new Intent(this,CameraActivity.class);
+                Intent intent=new Intent(this, CameraActivity.class);
                 startActivity(intent);
                 Log.d(TAG, "2点击");
                 break;

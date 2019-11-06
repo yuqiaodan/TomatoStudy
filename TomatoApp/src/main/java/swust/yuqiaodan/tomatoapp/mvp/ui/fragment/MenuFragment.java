@@ -34,6 +34,7 @@ import swust.yuqiaodan.tomatoapp.mvp.ui.activity.MusicActivity;
 import swust.yuqiaodan.tomatoapp.mvp.ui.activity.PicActivity;
 import swust.yuqiaodan.tomatoapp.mvp.ui.activity.MyTakePhotoActivity;
 import swust.yuqiaodan.tomatoapp.mvp.ui.activity.ScanQRActivity;
+import swust.yuqiaodan.tomatoapp.mvp.ui.activity.ServiceStudy.ServiceStudyActivity;
 import swust.yuqiaodan.tomatoapp.mvp.ui.adapter.MainMenuAdapter;
 
 public class MenuFragment extends BaseFragment<MainPresenter> implements MainContract.View {
@@ -81,7 +82,7 @@ public class MenuFragment extends BaseFragment<MainPresenter> implements MainCon
         mData.add(new ModelMainItem("拍照的艺术", R.drawable.pikachu_sit, MyTakePhotoActivity.class));
         mData.add(new ModelMainItem("Retrofit学习", R.drawable.pikachu_sit, null));
         mData.add(new ModelMainItem("扫码的艺术", R.drawable.pikachu_sit, ScanQRActivity.class));
-        mData.add(new ModelMainItem("美图", R.drawable.pikachu_sit, null));
+        mData.add(new ModelMainItem("Service学习", R.drawable.pikachu_sit, ServiceStudyActivity.class));
         mData.add(new ModelMainItem("美图", R.drawable.pikachu_sit, null));
         mData.add(new ModelMainItem("美图", R.drawable.pikachu_sit, null));
         mData.add(new ModelMainItem("美图", R.drawable.pikachu_sit, null));
