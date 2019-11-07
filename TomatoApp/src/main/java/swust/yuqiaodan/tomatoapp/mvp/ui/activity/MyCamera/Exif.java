@@ -1,4 +1,4 @@
-package swust.yuqiaodan.tomatoapp.mvp.ui.activity;
+package swust.yuqiaodan.tomatoapp.mvp.ui.activity.MyCamera;
 
 import android.util.Log;
 
