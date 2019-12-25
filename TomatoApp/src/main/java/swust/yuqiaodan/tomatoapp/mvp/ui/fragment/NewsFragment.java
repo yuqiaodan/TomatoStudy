@@ -67,8 +67,10 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
     NewsAdapter mAdapter;
     private static int page;//分页发送请求（页数） 每页默认10条新闻 在P中修改
 
+    private static String channel;
 
-    public static NewsFragment newInstance() {
+    public static NewsFragment newInstance(String mychannel) {
+        channel = mychannel;
         NewsFragment fragment = new NewsFragment();
         return fragment;
     }
@@ -129,11 +131,9 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener((view, viewType, data, position) -> {
             //跳转到网页加载页面
-            //Intent intent = new Intent(getContext(), ActivityWebView.class);//跳转到新闻网页
             Intent intent = new Intent(getContext(), MyWebActivity.class);//跳转到新闻网页
-            intent.putExtra("URL",mData.get(position).getPath());
+            intent.putExtra("URL", mData.get(position).getPath());
             startActivity(intent);
-
         });
 
     }

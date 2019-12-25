@@ -11,7 +11,7 @@ import android.widget.BaseAdapter;
 import java.util.List;
 
 public class MainTabAdapter  extends FragmentPagerAdapter {
-    private String[] mTitles=new String[]{"菜单","新闻","段子"};
+    private String[] mTitles=new String[]{"首页","视频","个人中心"};
     private List<Fragment> fragments;
     public MainTabAdapter(FragmentManager fm) {
         super(fm);
@@ -25,13 +25,10 @@ public class MainTabAdapter  extends FragmentPagerAdapter {
     public Fragment getItem(int i) {
         if (i == 1) {
             return fragments.get(1);
-            //fragment_order_all,fragment_order_confirm,fragment_order_pickup
         } else if (i == 2) {
             return fragments.get(2);
         } else {
             return fragments.get(0);}
-
-
     }
 
     @Override

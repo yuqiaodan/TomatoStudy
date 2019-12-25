@@ -30,6 +30,7 @@ import swust.yuqiaodan.tomatoapp.mvp.presenter.MainPresenter;
 
 
 import swust.yuqiaodan.tomatoapp.mvp.ui.adapter.MainTabAdapter;
+import swust.yuqiaodan.tomatoapp.mvp.ui.fragment.HomeNewsFragment;
 import swust.yuqiaodan.tomatoapp.mvp.ui.fragment.MenuFragment;
 import swust.yuqiaodan.tomatoapp.mvp.ui.fragment.NewsFragment;
 import swust.yuqiaodan.tomatoapp.mvp.ui.fragment.WeatherFragment;
@@ -51,7 +52,6 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  * ================================================
  */
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View {
-
 
     @BindView(R.id.main_viewPager)//为什么这里是空对象？
     ViewPager viewPager;
@@ -93,18 +93,15 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     private void initFragment() {
         List<Fragment> fragments = new ArrayList<>();
-        newsFragment = new NewsFragment();
-        weatherFragment = new WeatherFragment();
-        menuFragment = new MenuFragment();
-        fragments.add(menuFragment);
-        fragments.add(newsFragment);
-        fragments.add(weatherFragment);
+
+        fragments.add(new HomeNewsFragment());
+        fragments.add(NewsFragment.newInstance("头条"));
+        fragments.add(new MenuFragment());
 
         MainTabAdapter mainTabAdapter = new MainTabAdapter(getSupportFragmentManager());
         mainTabAdapter.setFragments(fragments);
         viewPager=findViewById(R.id.main_viewPager);
         tabLayout=findViewById(R.id.main_tabLayout);
-       // viewPager.setOffscreenPageLimit(2);//加载全部页面
         viewPager.setAdapter(mainTabAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }

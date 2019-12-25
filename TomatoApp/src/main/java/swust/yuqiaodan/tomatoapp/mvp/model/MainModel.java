@@ -12,7 +12,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import swust.yuqiaodan.tomatoapp.mvp.contract.MainContract;
-import swust.yuqiaodan.tomatoapp.mvp.model.api.service.WeatherService;
+import swust.yuqiaodan.tomatoapp.mvp.model.api.Api;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.WeatherEntity;
 
 
@@ -49,6 +49,6 @@ public class MainModel extends BaseModel implements MainContract.Model {
 
     @Override
     public Observable<WeatherEntity> getWeather(String version, String city) {
-        return mRepositoryManager.obtainRetrofitService(WeatherService.class).getWeather(version,city,"39719144","AKJr6R6X");
+        return mRepositoryManager.obtainRetrofitService(Api.class).getWeather(version,city,"39719144","AKJr6R6X");
     }
 }

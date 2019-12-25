@@ -14,7 +14,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import swust.yuqiaodan.tomatoapp.mvp.contract.NewsContract;
-import swust.yuqiaodan.tomatoapp.mvp.model.api.service.NewsService;
+import swust.yuqiaodan.tomatoapp.mvp.model.api.Api;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.BaseResponse;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JokeEntity;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.NewsEntity;
@@ -54,13 +54,13 @@ public class NewsModel extends BaseModel implements NewsContract.Model {
     @Override
     public Observable<BaseResponse<List<NewsEntity>>> getNews(int page, int count) {
         return mRepositoryManager
-                .obtainRetrofitService(NewsService.class)
+                .obtainRetrofitService(Api.class)
                 .getNews(String.valueOf(page), String.valueOf(count));
     }
     @Override
     public Observable<BaseResponse<List<JokeEntity>>> getJoke(int page, int count, String type) {
         return mRepositoryManager
-                .obtainRetrofitService(NewsService.class)
+                .obtainRetrofitService(Api.class)
                 .getJoke(String.valueOf(page), String.valueOf(count),type);
     }
 }

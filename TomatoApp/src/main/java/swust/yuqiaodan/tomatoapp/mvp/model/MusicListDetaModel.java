@@ -14,7 +14,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import swust.yuqiaodan.tomatoapp.mvp.contract.MusicListDetaContract;
-import swust.yuqiaodan.tomatoapp.mvp.model.api.service.MusicService;
+import swust.yuqiaodan.tomatoapp.mvp.model.api.Api;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.BaseResponse;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.MusicBean.MusicSearchBean;
 
@@ -53,6 +53,6 @@ public class MusicListDetaModel extends BaseModel implements MusicListDetaContra
     @Override
     public Observable<BaseResponse<List<MusicSearchBean>>> getSearchMusic(String name) {
         return mRepositoryManager
-                .obtainRetrofitService(MusicService.class).getSearchMusic(name);
+                .obtainRetrofitService(Api.class).getSearchMusic(name);
     }
 }

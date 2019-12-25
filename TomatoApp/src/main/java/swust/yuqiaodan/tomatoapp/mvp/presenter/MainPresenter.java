@@ -52,7 +52,6 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
         RxUtils.apply(mModel.getWeather("v1","成都"),mRootView).subscribe(new Consumer<WeatherEntity>() {
             @Override
             public void accept(WeatherEntity weatherEntity) throws Exception {
-
                 mRootView.showWeather(weatherEntity);
             }
         });

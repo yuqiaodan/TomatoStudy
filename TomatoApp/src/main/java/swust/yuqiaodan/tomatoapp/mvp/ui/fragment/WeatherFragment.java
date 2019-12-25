@@ -11,7 +11,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
@@ -26,27 +25,18 @@ import swust.yuqiaodan.tomatoapp.mvp.contract.WeatherContract;
 import swust.yuqiaodan.tomatoapp.mvp.presenter.WeatherPresenter;
 
 import swust.yuqiaodan.tomatoapp.R;
-import swust.yuqiaodan.tomatoapp.mvp.ui.adapter.JokeTabFragmentAdapter;
+import swust.yuqiaodan.tomatoapp.mvp.ui.adapter.MainNewsFragmentTabAdapter;
 import swust.yuqiaodan.tomatoapp.mvp.ui.fragment.JokeFragment.ImgFragment;
 import swust.yuqiaodan.tomatoapp.mvp.ui.fragment.JokeFragment.VideoFragment;
-import swust.yuqiaodan.tomatoapp.mvp.ui.widget.NoScrollViewPager;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 
 /**
+ *
  * 临时改变，这个类用于展示搞笑图片和搞笑视频
  * 同时包括图片的缩放 和 视频的播放
- * ================================================
- * Description:
- * <p>
- * Created by MVPArmsTemplate on 08/20/2019 16:58
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
- * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
- * <a href="https://github.com/JessYanCoding/MVPArms/wiki">See me</a>
- * <a href="https://github.com/JessYanCoding/MVPArmsTemplate">模版请保持更新</a>
- * ================================================
+ *
  */
 public class WeatherFragment extends BaseFragment<WeatherPresenter> implements WeatherContract.View {
 
@@ -87,7 +77,7 @@ public class WeatherFragment extends BaseFragment<WeatherPresenter> implements W
         fragmentList.add(new ImgFragment());
         fragmentList.add(new VideoFragment());
 
-        JokeTabFragmentAdapter mJokeTabAdapter = new JokeTabFragmentAdapter(getChildFragmentManager());
+        MainNewsFragmentTabAdapter mJokeTabAdapter = new MainNewsFragmentTabAdapter(getChildFragmentManager());
         mJokeTabAdapter.setFragments(fragmentList);
 
         viewPager.setOffscreenPageLimit(2);//加载全部页面
