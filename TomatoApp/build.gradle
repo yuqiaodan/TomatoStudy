@@ -108,7 +108,6 @@ dependencies {
     //这种做法可以让使用者有自行选择三方库的权利, 并且还可以减轻 Arms 的体积
     implementation rootProject.ext.dependencies["androideventbus"]
 //    implementation rootProject.ext.dependencies["eventbus"]
-
     //test
     debugImplementation rootProject.ext.dependencies["canary-debug"]
     releaseImplementation rootProject.ext.dependencies["canary-release"]
