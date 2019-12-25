@@ -15,6 +15,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.schedulers.Schedulers;
 import swust.yuqiaodan.tomatoapp.R;
 
 public class CameraActivity extends AppCompatActivity {
@@ -68,38 +72,52 @@ public class CameraActivity extends AppCompatActivity {
 
 
     public void takeSuccess(Bitmap bitmap) {//拍照成功后进行保存
-        //创建文件,要保存png，这里后缀就是png，要保存jpg，后缀就用jpg
-        //以拍摄时间为图片名进行命名
-        File file = new File(dirpath, System.currentTimeMillis() + ".jpg");
-        try {
-            //文件输出流
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
-            //压缩图片，如果要保存png，就用Bitmap.CompressFormat.PNG，要保存jpg就用Bitmap.CompressFormat.JPEG,质量是100%，表示不压缩
-            /**
-             * quality:100
-             * 为不压缩
-             * 对于某些性能较低的手机 下一步写入时耗时较长
-             * 考虑压缩多少合适
-             * */
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, fileOutputStream);
 
-            //写入，这里会卡顿，因为图片较大
-            fileOutputStream.flush();
-            //记得要关闭写入流
-            fileOutputStream.close();
-            //成功的提示，写入成功后，请在对应目录中找保存的图片
-            Toast.makeText(this, "拍照成功", Toast.LENGTH_SHORT).show();
+        Observable.create(new Observable.OnSubscribe<Object>() {
+            @Override
+            public void call(Subscriber<? super Object> subscriber) {
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            //失败的提示
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            //失败的提示
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-        bitmap.recycle();//及时回收
+                //创建文件,要保存png，这里后缀就是png，要保存jpg，后缀就用jpg
+                //以拍摄时间为图片名进行命名
+                File file = new File(dirpath, System.currentTimeMillis() + ".jpg");
+                try {
+                    //文件输出流
+                    FileOutputStream fileOutputStream = new FileOutputStream(file);
+                    //压缩图片，如果要保存png，就用Bitmap.CompressFormat.PNG，要保存jpg就用Bitmap.CompressFormat.JPEG,质量是100%，表示不压缩
+                    /**
+                     * quality:100
+                     * 为不压缩
+                     * 对于某些性能较低的手机 下一步写入时耗时较长
+                     * 考虑压缩多少合适
+                     * */
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 50, fileOutputStream);
+
+                    //写入，这里会卡顿，因为图片较大
+                    fileOutputStream.flush();
+                    //记得要关闭写入流
+                    fileOutputStream.close();
+                    //成功的提示，写入成功后，请在对应目录中找保存的图片
+                    //Toast.makeText(this, "拍照成功", Toast.LENGTH_SHORT).show();
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                    //失败的提示
+                    //Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    //失败的提示
+                    //Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+                bitmap.recycle();//及时回收
+
+            }//.subscribeOn可以指定上边的操作在任何线程进行
+            // 比如耗时的文件读取就在io，但是要显示dialog则需要在main线程
+            //可以从任何线程中开启异步线程
+        }).subscribeOn(Schedulers.io())
+                .subscribe();//如果不需要回调可以不设置订阅者
+
+
+
     }
 
 
