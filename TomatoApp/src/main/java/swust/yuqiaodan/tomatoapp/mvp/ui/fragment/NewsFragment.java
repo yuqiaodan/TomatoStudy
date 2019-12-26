@@ -6,6 +6,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -44,6 +45,9 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 
 /**
+ * 包含于HomeFragment 用于展示单个新闻频道的具体内容
+ *
+ *
  * 这个类只用于展示新闻和跳转到网页的加载
  * 由于服务器的问题 不管怎么请求都只返回第1页20条数据
  * ================================================
@@ -126,6 +130,9 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
 
     public void initRecycleView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.mContext));
+
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this.mContext, DividerItemDecoration.VERTICAL));
+
         mData = new ArrayList<>();
         mAdapter = new NewsAdapter(mData);
         mRecyclerView.setAdapter(mAdapter);

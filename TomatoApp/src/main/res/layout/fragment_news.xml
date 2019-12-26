@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             android:scrollbars="vertical"
             tools:listitem="@layout/item_news"
-            android:background="@color/recycleview"/>
+            android:background="@color/white"/>
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

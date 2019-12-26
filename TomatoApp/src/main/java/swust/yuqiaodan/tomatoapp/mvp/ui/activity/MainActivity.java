@@ -4,13 +4,14 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import android.support.v4.view.ViewPager;
 import android.support.design.widget.TabLayout;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
@@ -30,7 +31,7 @@ import swust.yuqiaodan.tomatoapp.mvp.presenter.MainPresenter;
 
 
 import swust.yuqiaodan.tomatoapp.mvp.ui.adapter.MainTabAdapter;
-import swust.yuqiaodan.tomatoapp.mvp.ui.fragment.HomeNewsFragment;
+import swust.yuqiaodan.tomatoapp.mvp.ui.fragment.HomeFragment;
 import swust.yuqiaodan.tomatoapp.mvp.ui.fragment.MenuFragment;
 import swust.yuqiaodan.tomatoapp.mvp.ui.fragment.NewsFragment;
 import swust.yuqiaodan.tomatoapp.mvp.ui.fragment.WeatherFragment;
@@ -38,28 +39,14 @@ import swust.yuqiaodan.tomatoapp.mvp.ui.fragment.WeatherFragment;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
-
-/**
- * ================================================
- * Description:
- * <p>
- * Created by MVPArmsTemplate on 08/20/2019 16:01
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
- * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
- * <a href="https://github.com/JessYanCoding/MVPArms/wiki">See me</a>
- * <a href="https://github.com/JessYanCoding/MVPArmsTemplate">模版请保持更新</a>
- * ================================================
- */
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View {
 
-    @BindView(R.id.main_viewPager)//为什么这里是空对象？
+    @BindView(R.id.main_viewPager)
     ViewPager viewPager;
     @BindView(R.id.main_tabLayout)
     TabLayout tabLayout;
-    private NewsFragment newsFragment;
-    private WeatherFragment weatherFragment;
-    private MenuFragment menuFragment;
+    @BindView(R.id.main_search)
+    LinearLayout main_search;
 
 
     @Override
@@ -72,38 +59,53 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 .inject(this);
     }
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        initFragment();
-    }
 
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
-        return 0; //如果你不需要框架帮你设置 setContentView(id) 需要自行设置,请返回 0
+        return R.layout.activity_main;
     }
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        initFragment();
     }
-
 
     private void initFragment() {
         List<Fragment> fragments = new ArrayList<>();
 
-        fragments.add(new HomeNewsFragment());
+        fragments.add(new HomeFragment());
         fragments.add(NewsFragment.newInstance("头条"));
         fragments.add(new MenuFragment());
 
         MainTabAdapter mainTabAdapter = new MainTabAdapter(getSupportFragmentManager());
         mainTabAdapter.setFragments(fragments);
-        viewPager=findViewById(R.id.main_viewPager);
-        tabLayout=findViewById(R.id.main_tabLayout);
         viewPager.setAdapter(mainTabAdapter);
         tabLayout.setupWithViewPager(viewPager);
+
+
+        //设置tab选择的监听 以判断是否显示搜索框
+        tabLayout.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                //选择tab
+                if (tab.getPosition() == 2) {
+                    main_search.setVisibility(View.GONE);
+                }
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                //离开tab
+                if (tab.getPosition() == 2) {
+                    main_search.setVisibility(View.VISIBLE);
+                }
+            }
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                //再次点击选择
+            }
+        });
+
     }
 
 
@@ -140,10 +142,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     }
 
 
-
-
     private long mBackPressed;
     private static final int TIME_INTERVAL = 2000;
+
     @Override
     public void onBackPressed() {
         if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {

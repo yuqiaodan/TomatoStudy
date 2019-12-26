@@ -9,14 +9,11 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import swust.yuqiaodan.tomatoapp.R;
 import swust.yuqiaodan.tomatoapp.app.Constants;
@@ -26,10 +23,14 @@ import swust.yuqiaodan.tomatoapp.mvp.model.entity.JokeEntity;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.NewsEntity;
 import swust.yuqiaodan.tomatoapp.mvp.presenter.NewsPresenter;
 import swust.yuqiaodan.tomatoapp.mvp.ui.adapter.MainNewsFragmentTabAdapter;
-
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
-public class HomeNewsFragment extends BaseFragment<NewsPresenter> implements NewsContract.View{
+
+/**
+ * 主界面 用于显示新闻的界面
+ *
+ * */
+public class HomeFragment extends BaseFragment<NewsPresenter> implements NewsContract.View{
 
     @BindView(R.id.joke_tabLayout)
     TabLayout tabLayout;
