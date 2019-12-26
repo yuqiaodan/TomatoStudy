@@ -26,7 +26,8 @@ import swust.yuqiaodan.tomatoapp.R;
 import swust.yuqiaodan.tomatoapp.di.component.DaggerNewsComponent;
 import swust.yuqiaodan.tomatoapp.mvp.contract.NewsContract;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JokeEntity;
-import swust.yuqiaodan.tomatoapp.mvp.model.entity.NewsEntity;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.NewsBean;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.OpenApiNewsBean;
 import swust.yuqiaodan.tomatoapp.mvp.presenter.NewsPresenter;
 import swust.yuqiaodan.tomatoapp.mvp.ui.adapter.JokeAdapter;
 
@@ -102,12 +103,12 @@ public class VideoFragment extends BaseFragment<NewsPresenter> implements NewsCo
     }
 
     @Override
-    public void showData(List<NewsEntity> data) {
+    public void showData(List<NewsBean> data) {
 
     }
 
     @Override
-    public void showMoreData(List<NewsEntity> data) {
+    public void showMoreData(List<NewsBean> data) {
 
     }
 

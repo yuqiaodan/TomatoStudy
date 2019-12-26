@@ -1,17 +1,49 @@
 package swust.yuqiaodan.tomatoapp.mvp.model.api;
 
-/**
- * ================================================
- * 存放一些与 API 有关的东西,如请求地址,请求码等
- * <p>
- * Created by MVPArmsTemplate on 08/20/2019 15:58
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
- * ================================================
- */
+import java.util.List;
+
+import io.reactivex.Observable;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.BaseRedponseData;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.BaseResponse;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.JokeEntity;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.MusicBean.MusicRankBean;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.MusicBean.MusicSearchBean;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.OpenApiNewsBean;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.PicEntity;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.WeatherEntity;
+
 public interface Api {
-    //这个接口基本上都可以用GET来直接请求，那个接口文档说明有点坑
-    String APP_DOMAIN = "https://api.apiopen.top/";//开源api Baseurl1
-    String BASEURL2="https://www.apiopen.top/";//有两个api接口
+    //新闻等来源一：OpenApi
+    String APP_DOMAIN = "https://api.apiopen.top/";
+    String APIOPEN_BASEURL_1="https://www.apiopen.top/";
+    //天气数据来源
     String WEATHER_API="https://www.tianqiapi.com/api";
+    //新闻数据来源二：极速数据
+
+    //请求音乐
+    @GET(APP_DOMAIN+"musicRankings")
+    Observable<BaseResponse<List<MusicRankBean>>> getMusicRank();
+
+    @GET(APP_DOMAIN+"searchMusic")
+    Observable<BaseResponse<List<MusicSearchBean>>> getSearchMusic(@Query("name") String name);
+
+    //网易新闻
+    @GET(APP_DOMAIN+"getWangYiNews")
+    Observable<BaseResponse<List<OpenApiNewsBean>>> getNews(@Query("page") String page, @Query("count") String count);
+
+    //笑话
+    @GET(APP_DOMAIN+"getJoke")
+    Observable<BaseResponse<List<JokeEntity>>> getJoke(@Query("page") String page, @Query("count") String count, @Query("type") String type);
+
+    //获取美图 当page=0时，会随机返回一页数据，page>=1时会返回相应页码的数据。
+    @GET(APIOPEN_BASEURL_1+"meituApi")
+    Observable<BaseRedponseData<List<PicEntity>>> getPic(@Query("page") String page);
+
+    //获取天气接口
+    //version为请求类型 默认v1（每天免费3w次）,city城市名如：成都 （不是成都市）
+    @GET(WEATHER_API)
+    Observable<WeatherEntity> getWeather(@Query("version") String version, @Query("city") String city, @Query("appid") String appid, @Query("appsecret") String appsecret);
+
 }

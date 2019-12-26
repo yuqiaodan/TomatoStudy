@@ -23,7 +23,7 @@ public class MusicListAdapter extends DefaultAdapter<MusicSearchBean> {
     @NonNull
     @Override
     public BaseHolder<MusicSearchBean> getHolder(@NonNull View v, int viewType) {
-        return new MusicListHoder(v);
+        return new MusicListHolder(v);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class MusicListAdapter extends DefaultAdapter<MusicSearchBean> {
 
 
 
-    class MusicListHoder extends BaseHolder<MusicSearchBean>{
+    class MusicListHolder extends BaseHolder<MusicSearchBean>{
         @BindView(R.id.sing_img)
         ImageView sing_img;
 
@@ -44,7 +44,7 @@ public class MusicListAdapter extends DefaultAdapter<MusicSearchBean> {
         @BindView(R.id.singername)
         TextView singername;
 
-        public MusicListHoder(View itemView) {
+        public MusicListHolder(View itemView) {
             super(itemView);
         }
 

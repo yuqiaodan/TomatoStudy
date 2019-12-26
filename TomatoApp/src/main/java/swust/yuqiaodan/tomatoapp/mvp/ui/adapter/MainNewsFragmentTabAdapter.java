@@ -7,23 +7,32 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.List;
 
-public class JokeTabFragmentAdapter extends FragmentPagerAdapter {
-    private String[] mTitles=new String[]{"图片","视频"};
+//首页新闻fragment适配器
+public class MainNewsFragmentTabAdapter extends FragmentPagerAdapter {
+    private String[] mTitles=new String[]{"头条",
+            "新闻",
+            "国内",
+            "国际",
+            "政治",
+            "财经",};
     private List<Fragment> fragments;
-    public JokeTabFragmentAdapter(FragmentManager fm) {
+
+    public MainNewsFragmentTabAdapter(FragmentManager fm) {
         super(fm);
     }
     public void setFragments(List<Fragment> fragments){
         this.fragments=fragments;
     }
 
+    public void setTitles(String[] mTitles){
+        this.mTitles=mTitles;
+    }
+
     @Override
     public Fragment getItem(int i) {
-        if (i == 1) {
-            return fragments.get(1);
-        }
-        else {
-            return fragments.get(0);}
+
+            return fragments.get(i);
+
     }
 
     @Override

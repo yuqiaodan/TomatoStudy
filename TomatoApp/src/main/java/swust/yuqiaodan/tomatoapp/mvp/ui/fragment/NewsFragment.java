@@ -2,16 +2,14 @@ package swust.yuqiaodan.tomatoapp.mvp.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
@@ -23,7 +21,6 @@ import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.vondear.rxtool.RxTool;
-import com.vondear.rxui.activity.ActivityWebView;
 
 
 import java.util.ArrayList;
@@ -33,7 +30,8 @@ import butterknife.BindView;
 import swust.yuqiaodan.tomatoapp.di.component.DaggerNewsComponent;
 import swust.yuqiaodan.tomatoapp.mvp.contract.NewsContract;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JokeEntity;
-import swust.yuqiaodan.tomatoapp.mvp.model.entity.NewsEntity;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.NewsBean;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.OpenApiNewsBean;
 import swust.yuqiaodan.tomatoapp.mvp.presenter.NewsPresenter;
 
 import swust.yuqiaodan.tomatoapp.R;
@@ -44,6 +42,9 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 
 /**
+ * 包含于HomeFragment 用于展示单个新闻频道的具体内容
+ *
+ *
  * 这个类只用于展示新闻和跳转到网页的加载
  * 由于服务器的问题 不管怎么请求都只返回第1页20条数据
  * ================================================
@@ -63,12 +64,14 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
     RecyclerView mRecyclerView;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
-    List<NewsEntity> mData;
+    List<NewsBean> mData;
     NewsAdapter mAdapter;
     private static int page;//分页发送请求（页数） 每页默认10条新闻 在P中修改
 
+    private static String channel;
 
-    public static NewsFragment newInstance() {
+    public static NewsFragment newInstance(String mychannel) {
+        channel = mychannel;
         NewsFragment fragment = new NewsFragment();
         return fragment;
     }
@@ -95,7 +98,7 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
         page = 1;
         initRefreshLayout();
         initRecycleView();
-        mPresenter.getNews(page, true);
+        mPresenter.getOprnApiNews(page, true);
 
     }
 
@@ -107,7 +110,7 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 page = 1;
-                mPresenter.getNews(page, true);
+                mPresenter.getOprnApiNews(page, true);
 
                 refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
             }
@@ -116,7 +119,7 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
                 page = page + 1;
-                mPresenter.getNews(page, false);
+                mPresenter.getOprnApiNews(page, false);
                 refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
             }
         });
@@ -124,15 +127,27 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
 
     public void initRecycleView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.mContext));
+
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this.mContext, DividerItemDecoration.VERTICAL));
+
         mData = new ArrayList<>();
         mAdapter = new NewsAdapter(mData);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener((view, viewType, data, position) -> {
             //跳转到网页加载页面
-            //Intent intent = new Intent(getContext(), ActivityWebView.class);//跳转到新闻网页
             Intent intent = new Intent(getContext(), MyWebActivity.class);//跳转到新闻网页
-            intent.putExtra("URL",mData.get(position).getPath());
+            intent.putExtra("URL", mData.get(position).getUrl());
             startActivity(intent);
+
+
+
+            /**
+             *
+             * 查看图片
+             *             Intent intent=new Intent(getContext(), ShowImageActivity.class);
+             *             intent.putExtra("image",mData.get(position).getImages());
+             *             startActivity(intent);
+             * */
 
         });
 
@@ -140,14 +155,14 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
 
 
     @Override
-    public void showData(List<NewsEntity> data) {//展示新闻数据
+    public void showData(List<NewsBean> data) {//展示新闻数据
         mData.clear();
         mData.addAll(data);
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void showMoreData(List<NewsEntity> data) {
+    public void showMoreData(List<NewsBean> data) {
 
         mData.addAll(data);
         mAdapter.notifyDataSetChanged();
@@ -163,43 +178,6 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
 
     }
 
-
-    /**
-     * 通过此方法可以使 Fragment 能够与外界做一些交互和通信, 比如说外部的 Activity 想让自己持有的某个 Fragment 对象执行一些方法,
-     * 建议在有多个需要与外界交互的方法时, 统一传 {@link Message}, 通过 what 字段来区分不同的方法, 在 {@link #setData(Object)}
-     * 方法中就可以 {@code switch} 做不同的操作, 这样就可以用统一的入口方法做多个不同的操作, 可以起到分发的作用
-     * <p>
-     * 调用此方法时请注意调用时 Fragment 的生命周期, 如果调用 {@link #setData(Object)} 方法时 {@link Fragment#onCreate(Bundle)} 还没执行
-     * 但在 {@link #setData(Object)} 里却调用了 Presenter 的方法, 是会报空的, 因为 Dagger 注入是在 {@link Fragment#onCreate(Bundle)} 方法中执行的
-     * 然后才创建的 Presenter, 如果要做一些初始化操作,可以不必让外部调用 {@link #setData(Object)}, 在 {@link #initData(Bundle)} 中初始化就可以了
-     * <p>
-     * Example usage:
-     * <pre>
-     * public void setData(@Nullable Object data) {
-     *     if (data != null && data instanceof Message) {
-     *         switch (((Message) data).what) {
-     *             case 0:
-     *                 loadData(((Message) data).arg1);
-     *                 break;
-     *             case 1:
-     *                 refreshUI();
-     *                 break;
-     *             default:
-     *                 //do something
-     *                 break;
-     *         }
-     *     }
-     * }
-     *
-     * // call setData(Object):
-     * Message data = new Message();
-     * data.what = 0;
-     * data.arg1 = 1;
-     * fragment.setData(data);
-     * </pre>
-     *
-     * @param data 当不需要参数时 {@code data} 可以为 {@code null}
-     */
     @Override
     public void setData(@Nullable Object data) {
 

@@ -5,6 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+<LinearLayout
+    android:id="@+id/main_search"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="@color/mainbule"
+    android:gravity="center_vertical"
+    >
+
+    <EditText
+        android:id="@+id/edit_search"
+        android:layout_marginLeft="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:hint="请输入搜索内容"
+        android:inputType="text"
+        android:lines="1"
+        />
+
+
+
+</LinearLayout>
+
 
     <android.support.v4.view.ViewPager
         android:id="@+id/main_viewPager"

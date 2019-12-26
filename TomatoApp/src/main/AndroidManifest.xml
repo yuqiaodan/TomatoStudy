@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".mvp.ui.activity.DaggerStudy.DaggerStudyActivity" />
+
 
         <service
             android:name=".mvp.ui.activity.ServiceStudy.MyFirstService"
@@ -29,8 +29,7 @@
 
         <activity android:name=".mvp.ui.activity.ServiceStudy.ServiceStudyActivity" />
         <activity android:name=".mvp.ui.activity.ScanQRActivity" />
-        <activity android:name=".mvp.ui.activity.LayoutStudy.RelativeLayoutTestActivity" />
-        <activity android:name=".mvp.ui.activity.LayoutStudy.ConstraintLayoutTestActivity" />
+
         <activity
             android:name=".mvp.ui.activity.MyCamera.CameraActivity"
             android:screenOrientation="portrait" />
@@ -40,6 +39,8 @@
         <activity android:name=".mvp.ui.activity.MyWebActivity" />
         <activity android:name=".mvp.ui.activity.PicActivity" />
         <activity android:name=".mvp.ui.activity.ShowImageActivity" />
+
+
         <activity android:name=".mvp.ui.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

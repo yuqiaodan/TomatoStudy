@@ -10,7 +10,7 @@ import swust.yuqiaodan.tomatoapp.mvp.contract.NewsContract;
 
 import com.jess.arms.di.scope.FragmentScope;
 
-import swust.yuqiaodan.tomatoapp.mvp.ui.fragment.JokeFragment.ImgFragment;
+import swust.yuqiaodan.tomatoapp.mvp.ui.fragment.HomeFragment;
 import swust.yuqiaodan.tomatoapp.mvp.ui.fragment.JokeFragment.VideoFragment;
 import swust.yuqiaodan.tomatoapp.mvp.ui.fragment.NewsFragment;
 
@@ -31,8 +31,9 @@ import swust.yuqiaodan.tomatoapp.mvp.ui.fragment.NewsFragment;
 @Component(modules = NewsModule.class, dependencies = AppComponent.class)
 public interface NewsComponent {
     void inject(NewsFragment fragment);
-    void inject(ImgFragment fragment);
     void inject(VideoFragment fragment);//有多个view共用一个p时 在这里并行注入
+    void inject(HomeFragment fragment);
+
     @Component.Builder
     interface Builder {
         @BindsInstance

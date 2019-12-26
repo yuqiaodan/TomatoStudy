@@ -1,22 +1,15 @@
 package swust.yuqiaodan.tomatoapp.mvp.model;
-
 import android.app.Application;
-
 import com.google.gson.Gson;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
-
 import com.jess.arms.di.scope.ActivityScope;
-
 import java.util.List;
-
 import javax.inject.Inject;
-
 import io.reactivex.Observable;
 import swust.yuqiaodan.tomatoapp.mvp.contract.PicContract;
-import swust.yuqiaodan.tomatoapp.mvp.model.api.service.PicService;
+import swust.yuqiaodan.tomatoapp.mvp.model.api.Api;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.BaseRedponseData;
-import swust.yuqiaodan.tomatoapp.mvp.model.entity.BaseResponse;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.PicEntity;
 
 
@@ -54,6 +47,6 @@ public class PicModel extends BaseModel implements PicContract.Model {
     @Override
     public Observable<BaseRedponseData<List<PicEntity>>> getPic() {
         return mRepositoryManager
-                .obtainRetrofitService(PicService.class).getPic(String.valueOf(0));
+                .obtainRetrofitService(Api.class).getPic(String.valueOf(0));
     }
 }
