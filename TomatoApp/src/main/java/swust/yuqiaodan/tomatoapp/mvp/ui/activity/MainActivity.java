@@ -21,6 +21,8 @@ import android.widget.Toast;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
+import com.vondear.rxtool.RxBarTool;
+import com.vondear.rxtool.RxTool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +75,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+
+        RxTool.init(this);
+        RxBarTool.setTransparentStatusBar(this);
+
         //防止键盘自动弹出
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

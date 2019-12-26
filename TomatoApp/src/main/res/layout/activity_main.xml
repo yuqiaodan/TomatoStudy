@@ -5,57 +5,64 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-<LinearLayout
-    android:id="@+id/main_search"
-    android:layout_width="match_parent"
-    android:layout_height="60dp"
-    android:background="@color/mainBlue"
-    android:gravity="center_vertical"
-    >
 
     <LinearLayout
-        android:id="@+id/view_search"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="30dp"
-        android:background="@drawable/shape_round_white"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
-
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/mainBlue"
+        android:clipToPadding="true"
+        android:fitsSystemWindows="true"
         >
-        <ImageView
-            android:padding="5dp"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/search_icon"
-            android:background="@drawable/shape_round_white"
-            />
-
     </LinearLayout>
 
-    <EditText
+    <LinearLayout
+        android:id="@+id/main_search"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/mainBlue"
         android:gravity="center_vertical"
-        android:layout_marginRight="15dp"
-        android:visibility="gone"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="30dp"
-        android:background="@drawable/shape_round_white"
-        android:textSize="15sp"
-        android:inputType="text"
-        android:lines="1"
-        />
 
-    <ImageView
-        android:id="@+id/main_scan"
-        android:layout_marginRight="10dp"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:src="@drawable/scan_icon"
-        />
+        >
+
+        <LinearLayout
+            android:id="@+id/view_search"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_margin="15dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_round_white"
+            >
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/shape_round_white"
+                android:padding="5dp"
+                android:src="@drawable/search_icon" />
+
+        </LinearLayout>
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="15dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_round_white"
+            android:gravity="center_vertical"
+            android:inputType="text"
+            android:lines="1"
+            android:textSize="15sp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/main_scan"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/scan_icon" />
 
 
-</LinearLayout>
+    </LinearLayout>
 
 
     <android.support.v4.view.ViewPager
@@ -63,6 +70,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
@@ -75,10 +83,9 @@
         android:background="@color/white"
         app:tabIndicatorColor="#88E7FF"
         app:tabIndicatorHeight="2dp"
-        app:tabTextColor="@color/black"
-        app:tabSelectedTextColor="#88E7FF"
         app:tabMode="fixed"
-        ></android.support.design.widget.TabLayout>
+        app:tabSelectedTextColor="#88E7FF"
+        app:tabTextColor="@color/black"></android.support.design.widget.TabLayout>
 
 
 </LinearLayout>
