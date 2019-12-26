@@ -13,9 +13,11 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import swust.yuqiaodan.tomatoapp.app.Constants;
 import swust.yuqiaodan.tomatoapp.mvp.contract.NewsContract;
 import swust.yuqiaodan.tomatoapp.mvp.model.api.Api;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.BaseResponse;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuNewsBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JokeEntity;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.OpenApiNewsBean;
 
@@ -52,10 +54,10 @@ public class NewsModel extends BaseModel implements NewsContract.Model {
     }
 
     @Override
-    public Observable<BaseResponse<List<OpenApiNewsBean>>> getOprnApiNews(int page, int count) {
+    public Observable<BaseResponse<List<OpenApiNewsBean>>> getWangYiNews(int page, int count) {
         return mRepositoryManager
                 .obtainRetrofitService(Api.class)
-                .getNews(String.valueOf(page), String.valueOf(count));
+                .getWangYiNews(String.valueOf(page), String.valueOf(count));
     }
     @Override
     public Observable<BaseResponse<List<JokeEntity>>> getJoke(int page, int count, String type) {
@@ -63,4 +65,14 @@ public class NewsModel extends BaseModel implements NewsContract.Model {
                 .obtainRetrofitService(Api.class)
                 .getJoke(String.valueOf(page), String.valueOf(count),type);
     }
+
+
+    @Override
+    public Observable<JiSuNewsBean> getJiSuNews(String channel,int page) {
+        return mRepositoryManager
+                .obtainRetrofitService(Api.class)
+                .getJiSuNews(channel,String.valueOf(page),"10", Constants.JISU_APP_KEY);
+    }
+
+
 }

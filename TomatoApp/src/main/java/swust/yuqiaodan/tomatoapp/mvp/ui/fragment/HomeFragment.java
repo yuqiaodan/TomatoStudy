@@ -21,21 +21,20 @@ import swust.yuqiaodan.tomatoapp.di.component.DaggerNewsComponent;
 import swust.yuqiaodan.tomatoapp.mvp.contract.NewsContract;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JokeEntity;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.NewsBean;
-import swust.yuqiaodan.tomatoapp.mvp.model.entity.OpenApiNewsBean;
 import swust.yuqiaodan.tomatoapp.mvp.presenter.NewsPresenter;
 import swust.yuqiaodan.tomatoapp.mvp.ui.adapter.MainNewsFragmentTabAdapter;
+
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 
 /**
  * 主界面 用于显示新闻的界面
- *
- * */
-public class HomeFragment extends BaseFragment<NewsPresenter> implements NewsContract.View{
+ */
+public class HomeFragment extends BaseFragment<NewsPresenter> implements NewsContract.View {
 
-    @BindView(R.id.joke_tabLayout)
+    @BindView(R.id.home_tabLayout)
     TabLayout tabLayout;
-    @BindView(R.id.joke_viewpager)
+    @BindView(R.id.home_viewpager)
     ViewPager viewPager;
 
     private List<Fragment> fragmentList;
@@ -53,34 +52,44 @@ public class HomeFragment extends BaseFragment<NewsPresenter> implements NewsCon
 
     @Override
     public View initView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-         return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-
         initFragment();
-
     }
 
 
     private void initFragment() {
-
-
         fragmentList = new ArrayList<>();
-        fragmentList.add(NewsFragment.newInstance(Constants.channelList.get(0)));
-        fragmentList.add(NewsFragment.newInstance(Constants.channelList.get(1)));
-        fragmentList.add(NewsFragment.newInstance(Constants.channelList.get(2)));
-        fragmentList.add(NewsFragment.newInstance(Constants.channelList.get(3)));
-        fragmentList.add(NewsFragment.newInstance(Constants.channelList.get(4)));
-        fragmentList.add(NewsFragment.newInstance(Constants.channelList.get(5)));
+        for (String channel : Constants.getChannelSelected()) {
+            fragmentList.add(new NewsFragment(channel));
 
+        }
 
-        MainNewsFragmentTabAdapter mJokeTabAdapter = new MainNewsFragmentTabAdapter(getChildFragmentManager());
-        mJokeTabAdapter.setFragments(fragmentList);
-        viewPager.setAdapter(mJokeTabAdapter);
+        MainNewsFragmentTabAdapter mainNewsFragmentTabAdapter = new MainNewsFragmentTabAdapter(getChildFragmentManager());
+        mainNewsFragmentTabAdapter.setFragments(fragmentList);
+        viewPager.setAdapter(mainNewsFragmentTabAdapter);
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
+
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+
+        });
+
 
     }
 
@@ -90,24 +99,11 @@ public class HomeFragment extends BaseFragment<NewsPresenter> implements NewsCon
     }
 
     @Override
-    public void showData(List<NewsBean> data) {
+    public void showNews(List<NewsBean> data) {
 
     }
 
-    @Override
-    public void showMoreData(List<NewsBean> data) {
 
-    }
-
-    @Override
-    public void showDataJoke(List<JokeEntity> data) {
-
-    }
-
-    @Override
-    public void showMoreDataJoke(List<JokeEntity> data) {
-
-    }
 
     @Override
     public void showMessage(@NonNull String message) {

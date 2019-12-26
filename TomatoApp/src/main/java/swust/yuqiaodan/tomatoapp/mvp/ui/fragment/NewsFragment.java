@@ -1,5 +1,6 @@
 package swust.yuqiaodan.tomatoapp.mvp.ui.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -31,7 +32,6 @@ import swust.yuqiaodan.tomatoapp.di.component.DaggerNewsComponent;
 import swust.yuqiaodan.tomatoapp.mvp.contract.NewsContract;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JokeEntity;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.NewsBean;
-import swust.yuqiaodan.tomatoapp.mvp.model.entity.OpenApiNewsBean;
 import swust.yuqiaodan.tomatoapp.mvp.presenter.NewsPresenter;
 
 import swust.yuqiaodan.tomatoapp.R;
@@ -43,37 +43,26 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 /**
  * 包含于HomeFragment 用于展示单个新闻频道的具体内容
- *
- *
- * 这个类只用于展示新闻和跳转到网页的加载
- * 由于服务器的问题 不管怎么请求都只返回第1页20条数据
- * ================================================
- * Description:
- * <p>
- * Created by MVPArmsTemplate on 08/20/2019 16:40
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
- * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
- * <a href="https://github.com/JessYanCoding/MVPArms/wiki">See me</a>
- * <a href="https://github.com/JessYanCoding/MVPArmsTemplate">模版请保持更新</a>
- * ================================================
  */
+@SuppressLint("ValidFragment")
 public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsContract.View {
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+
     List<NewsBean> mData;
     NewsAdapter mAdapter;
-    private static int page;//分页发送请求（页数） 每页默认10条新闻 在P中修改
 
-    private static String channel;
+    private int page;//分页发送请求（页数） 每页默认10条新闻 在P中修改
 
-    public static NewsFragment newInstance(String mychannel) {
-        channel = mychannel;
-        NewsFragment fragment = new NewsFragment();
-        return fragment;
+    private  String channel;
+
+     @SuppressLint("ValidFragment")
+     public NewsFragment(String channel){
+
+        this.channel=channel;
     }
 
     @Override
@@ -98,7 +87,8 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
         page = 1;
         initRefreshLayout();
         initRecycleView();
-        mPresenter.getOprnApiNews(page, true);
+
+        mPresenter.getNews(channel,page);
 
     }
 
@@ -106,11 +96,14 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
         //设置加载头和脚样式
         refreshLayout.setRefreshHeader(new WaterDropHeader(this.mContext));
         refreshLayout.setRefreshFooter(new ClassicsFooter(this.mContext));
+
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                page = 1;
-                mPresenter.getOprnApiNews(page, true);
+
+                page = 1+10;
+
+                mPresenter.getNews(channel,page);
 
                 refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
             }
@@ -119,7 +112,7 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
                 page = page + 1;
-                mPresenter.getOprnApiNews(page, false);
+                mPresenter.getNews(channel,page);
                 refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
             }
         });
@@ -139,8 +132,6 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
             intent.putExtra("URL", mData.get(position).getUrl());
             startActivity(intent);
 
-
-
             /**
              *
              * 查看图片
@@ -154,29 +145,16 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
     }
 
 
+
     @Override
-    public void showData(List<NewsBean> data) {//展示新闻数据
-        mData.clear();
+    public void showNews(List<NewsBean> data) {
+        if (page == 1) {//如果是第一页去请求 则是刷新
+            mData.clear();
+        }
         mData.addAll(data);
         mAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void showMoreData(List<NewsBean> data) {
-
-        mData.addAll(data);
-        mAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void showDataJoke(List<JokeEntity> data) {
-
-    }
-
-    @Override
-    public void showMoreDataJoke(List<JokeEntity> data) {
-
-    }
 
     @Override
     public void setData(@Nullable Object data) {

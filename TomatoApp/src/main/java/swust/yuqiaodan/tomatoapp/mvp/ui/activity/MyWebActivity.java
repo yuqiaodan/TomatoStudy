@@ -29,6 +29,7 @@ import com.vondear.rxui.view.RxTextAutoZoom;
 
 import swust.yuqiaodan.tomatoapp.R;
 
+
 public class MyWebActivity extends AppCompatActivity {
 
 
@@ -46,7 +47,7 @@ public class MyWebActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         RxBarTool.setTransparentStatusBar(this);
-        setContentView(R.layout.activity_webview);
+        setContentView(R.layout.activity_mywebview);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         initView();// 初始化控件 - FindViewById之类的操作
         initData();// 初始化控件的数据及监听事件
@@ -68,7 +69,6 @@ public class MyWebActivity extends AppCompatActivity {
 
             }
         });
-
         initAutoFitEditText();
     }
 
