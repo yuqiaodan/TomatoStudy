@@ -1,35 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/joke_tabLayout"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_height="wrap_content"
         android:background="@color/white"
-        app:tabIndicatorColor="#88E7FF"
-        app:tabIndicatorHeight="2dp"
-        app:tabTextColor="@color/black"
-        app:tabSelectedTextColor="#1ABDE6"
-        app:tabMode="scrollable"
-        ></android.support.design.widget.TabLayout>
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/home_tabLayout"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+
+            app:tabIndicatorColor="#88E7FF"
+            app:tabIndicatorHeight="0dp"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="#1ABDE6"
+            app:tabTextColor="@color/black" />
+
+        <ImageView
+            android:id="@+id/channel_menu"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:padding="6dp"
+            android:src="@drawable/channel_menu_icon" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/mainitem" />
 
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/joke_viewpager"
+        android:id="@+id/home_viewpager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/white"
-        >
-    </android.support.v4.view.ViewPager>
-
-
-
+        android:background="@color/white"></android.support.v4.view.ViewPager>
 
 
 </LinearLayout>

@@ -9,7 +9,7 @@
         android:id="@+id/rl_avatar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#88E7FF">
+        android:background="@color/mainBlue">
 
         <TextView
             android:id="@+id/tv_bg"
@@ -33,7 +33,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/shape_circle_blue"
+                android:background="@drawable/shape_circle_main_blue"
                 android:padding="3dp"
                 android:src="@drawable/circle_elves_ball"/>
         </LinearLayout>

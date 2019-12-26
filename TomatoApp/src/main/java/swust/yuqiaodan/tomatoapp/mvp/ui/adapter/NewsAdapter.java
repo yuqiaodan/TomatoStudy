@@ -32,34 +32,32 @@ public class NewsAdapter extends DefaultAdapter<NewsBean> {
     }
 
 
+
     public class NewsHolder extends BaseHolder<NewsBean> {
         @BindView(R.id.news_img)
-        ImageView news_img;
+        ImageView newsImg;
         @BindView(R.id.news_title)
-        TextView news_title;
+        TextView newsTitle;
+        @BindView(R.id.news_source)
+        TextView newsSource;
+        @BindView(R.id.news_time)
+        TextView newsTime;
 
-        //图片的请求和缓存 有MVPArms封装提供
-/*    private ImageLoader mImageLoader;
-    private AppComponent mAppComponent;*/
         public NewsHolder(View itemView) {
             super(itemView);
-/*        mAppComponent = ArmsUtils.obtainAppComponentFromContext(itemView.getContext());
-        mImageLoader = mAppComponent.imageLoader();*/
+
         }
 
         @Override
         public void setData(@NonNull NewsBean data, int position) {
 
+            newsTitle.setText(data.getTitle());
+            newsSource.setText(data.getSource());
+            newsTime.setText(data.getTime());
 
-            news_title.setText(data.getTitle());
-
-/*        mImageLoader.loadImage(itemView.getContext(),
-                ImageConfigImpl
-                        .builder()
-                        .url(data.getImage())
-                        .imageView(news_img)
-                        .build());*/
-            Glide.with(itemView.getContext()).load(data.getImageUrl()).into(news_img);
+            Glide.with(itemView.getContext()).load(data.getImageUrl())
+                    .thumbnail(Glide.with(itemView.getContext()).load(R.drawable.loding))
+                    .into(newsImg);
 
         }
     }

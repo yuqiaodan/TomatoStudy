@@ -15,9 +15,11 @@ import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import javax.inject.Inject;
 
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
+import swust.yuqiaodan.tomatoapp.app.Constants;
 import swust.yuqiaodan.tomatoapp.app.utils.RxUtils;
 import swust.yuqiaodan.tomatoapp.mvp.contract.NewsContract;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.BaseResponse;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuNewsBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JokeEntity;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.NewsBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.OpenApiNewsBean;
@@ -52,57 +54,67 @@ public class NewsPresenter extends BasePresenter<NewsContract.Model, NewsContrac
     }
 
 
-    public void getOprnApiNews(int page,boolean isRefresh){
-        RxUtils.apply(mModel.getOprnApiNews(page,10),mRootView)
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<List<OpenApiNewsBean>>>(mErrorHandler) {
-                    @Override//请求完毕后显示数据
-                    public void onNext(BaseResponse<List<OpenApiNewsBean>> listBaseResponse) {
 
-                        List<NewsBean> showData=new ArrayList<>();
-                        for(OpenApiNewsBean openApiNewsBean:listBaseResponse.getResult()){
-                            NewsBean newsBean=new NewsBean();
-                            newsBean.setUrl(openApiNewsBean.getPath());
-                            newsBean.setImageUrl(openApiNewsBean.getImage());
-                            newsBean.setTime(openApiNewsBean.getPasstime());
-                            newsBean.setTitle(openApiNewsBean.getTitle());
-                            //OpenApi获取的新闻默认来源：网易新闻
-                            newsBean.setSource("网易新闻客户端");
-
-                            showData.add(newsBean);
-                        }
-
-
-
-                        if (isRefresh)
-                        {
-                            mRootView.showData(showData);
-                        }
-                        else{
-                            mRootView.showMoreData(showData);
-                        }
-
-
-
-                    }
-                });
-
-    }
-
-    public void getJoke(String type,boolean isRefresh){
-        RxUtils.apply(mModel.getJoke(0,10,type),mRootView)
+    public void getJoke(String type, boolean isRefresh) {
+        RxUtils.apply(mModel.getJoke(0, 10, type), mRootView)
                 .subscribe(new ErrorHandleSubscriber<BaseResponse<List<JokeEntity>>>(mErrorHandler) {
                     @Override
                     public void onNext(BaseResponse<List<JokeEntity>> listBaseResponse) {
-                        if (isRefresh)
-                        {mRootView.showDataJoke(listBaseResponse.getResult());}
-                        else{
-                            mRootView.showMoreDataJoke(listBaseResponse.getResult());
-                        }
+
                     }
                 });
 
     }
 
+
+    public void getNews(String channel, int page) {
+
+        if (Constants.REALTIME.equals(channel)) {//因为数据来源接口不同 所以“实时”作为一个单独的频道
+            RxUtils.apply(mModel.getWangYiNews(page, 10), mRootView)
+                    .subscribe(new ErrorHandleSubscriber<BaseResponse<List<OpenApiNewsBean>>>(mErrorHandler) {
+                        @Override//请求完毕后显示数据
+                        public void onNext(BaseResponse<List<OpenApiNewsBean>> listBaseResponse) {
+                            List<NewsBean> showData = new ArrayList<>();
+                            //进行新闻包装
+                            for (OpenApiNewsBean openApiNewsBean : listBaseResponse.getResult()) {
+                                NewsBean newsBean = new NewsBean();
+                                newsBean.setUrl(openApiNewsBean.getPath());
+                                newsBean.setImageUrl(openApiNewsBean.getImage());
+                                newsBean.setTime(openApiNewsBean.getPasstime());
+                                newsBean.setTitle(openApiNewsBean.getTitle());
+                                //OpenApi获取的新闻默认来源：网易新闻
+                                newsBean.setSource("网易新闻客户端");
+                                //这个接口没有直接返回html
+                                newsBean.setHtmlContent("");
+                                showData.add(newsBean);
+                            }
+                            mRootView.showNews(showData);
+                        }
+                    });
+            return;
+        }
+
+        RxUtils.apply(mModel.getJiSuNews(channel, page), mRootView)
+                .subscribe(new ErrorHandleSubscriber<JiSuNewsBean>(mErrorHandler) {
+                    @Override
+                    public void onNext(JiSuNewsBean jiSuNewsBean) {
+                        List<NewsBean> showData = new ArrayList<>();
+                        for (JiSuNewsBean.ResultBean.ListBean listBean : jiSuNewsBean.getResult().getList()) {
+                            NewsBean newsBean = new NewsBean();
+                            newsBean.setUrl(listBean.getUrl());
+                            newsBean.setImageUrl(listBean.getPic());
+                            newsBean.setTime(listBean.getTime());
+                            newsBean.setTitle(listBean.getTitle());
+                            //OpenApi获取的新闻默认来源：网易新闻
+                            newsBean.setSource(listBean.getSrc());
+                            //这个接口没有直接返回html
+                            newsBean.setHtmlContent(listBean.getContent());
+                            showData.add(newsBean);
+                        }
+                        mRootView.showNews(showData);
+                    }
+                });
+    }
 
 
     @Override

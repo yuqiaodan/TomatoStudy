@@ -12,6 +12,8 @@ import android.support.v4.view.ViewPager;
 import android.support.design.widget.TabLayout;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import swust.yuqiaodan.tomatoapp.R;
+import swust.yuqiaodan.tomatoapp.app.Constants;
 import swust.yuqiaodan.tomatoapp.di.component.DaggerMainComponent;
 import swust.yuqiaodan.tomatoapp.mvp.contract.MainContract;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.WeatherEntity;
@@ -46,8 +49,11 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @BindView(R.id.main_tabLayout)
     TabLayout tabLayout;
     @BindView(R.id.main_search)
-    LinearLayout main_search;
-
+    LinearLayout mainSearchView;
+    @BindView(R.id.view_search)
+    LinearLayout viewSearch;
+    @BindView(R.id.main_scan)
+    ImageView viewScan;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -69,17 +75,15 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     public void initData(@Nullable Bundle savedInstanceState) {
         //防止键盘自动弹出
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
-
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         initFragment();
     }
 
+
     private void initFragment() {
         List<Fragment> fragments = new ArrayList<>();
-
         fragments.add(new HomeFragment());
-        fragments.add(NewsFragment.newInstance("头条"));
+        fragments.add(new NewsFragment(Constants.REALTIME));
         fragments.add(new MenuFragment());
 
         MainTabAdapter mainTabAdapter = new MainTabAdapter(getSupportFragmentManager());
@@ -87,21 +91,20 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         viewPager.setAdapter(mainTabAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
-
         //设置tab选择的监听 以判断是否显示搜索框
         tabLayout.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 //选择tab
                 if (tab.getPosition() == 2) {
-                    main_search.setVisibility(View.GONE);
+                    mainSearchView.setVisibility(View.GONE);
                 }
             }
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 //离开tab
                 if (tab.getPosition() == 2) {
-                    main_search.setVisibility(View.VISIBLE);
+                    mainSearchView.setVisibility(View.VISIBLE);
                 }
             }
             @Override
@@ -109,7 +112,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 //再次点击选择
             }
         });
-
     }
 
 
