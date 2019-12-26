@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -68,6 +69,8 @@ public class MusicActivity extends BaseActivity<MusicPresenter> implements Music
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        //防止键盘自动弹出
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
     }
 

@@ -20,7 +20,8 @@ import swust.yuqiaodan.tomatoapp.app.Constants;
 import swust.yuqiaodan.tomatoapp.di.component.DaggerNewsComponent;
 import swust.yuqiaodan.tomatoapp.mvp.contract.NewsContract;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JokeEntity;
-import swust.yuqiaodan.tomatoapp.mvp.model.entity.NewsEntity;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.NewsBean;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.OpenApiNewsBean;
 import swust.yuqiaodan.tomatoapp.mvp.presenter.NewsPresenter;
 import swust.yuqiaodan.tomatoapp.mvp.ui.adapter.MainNewsFragmentTabAdapter;
 import static com.jess.arms.utils.Preconditions.checkNotNull;
@@ -52,7 +53,7 @@ public class HomeFragment extends BaseFragment<NewsPresenter> implements NewsCon
 
     @Override
     public View initView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-         return inflater.inflate(R.layout.fragment_weather, container, false);
+         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
 
@@ -89,12 +90,12 @@ public class HomeFragment extends BaseFragment<NewsPresenter> implements NewsCon
     }
 
     @Override
-    public void showData(List<NewsEntity> data) {
+    public void showData(List<NewsBean> data) {
 
     }
 
     @Override
-    public void showMoreData(List<NewsEntity> data) {
+    public void showMoreData(List<NewsBean> data) {
 
     }
 

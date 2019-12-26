@@ -1,6 +1,6 @@
 package swust.yuqiaodan.tomatoapp.mvp.model.entity;
 
-public class NewsEntity {
+public class OpenApiNewsBean {
 
 
     /**

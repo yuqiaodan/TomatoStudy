@@ -10,14 +10,17 @@ import swust.yuqiaodan.tomatoapp.mvp.model.entity.BaseResponse;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JokeEntity;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.MusicBean.MusicRankBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.MusicBean.MusicSearchBean;
-import swust.yuqiaodan.tomatoapp.mvp.model.entity.NewsEntity;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.OpenApiNewsBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.PicEntity;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.WeatherEntity;
 
 public interface Api {
+    //新闻等来源一：OpenApi
     String APP_DOMAIN = "https://api.apiopen.top/";
     String APIOPEN_BASEURL_1="https://www.apiopen.top/";
+    //天气数据来源
     String WEATHER_API="https://www.tianqiapi.com/api";
+    //新闻数据来源二：极速数据
 
     //请求音乐
     @GET(APP_DOMAIN+"musicRankings")
@@ -28,7 +31,7 @@ public interface Api {
 
     //网易新闻
     @GET(APP_DOMAIN+"getWangYiNews")
-    Observable<BaseResponse<List<NewsEntity>>> getNews(@Query("page") String page, @Query("count") String count);
+    Observable<BaseResponse<List<OpenApiNewsBean>>> getNews(@Query("page") String page, @Query("count") String count);
 
     //笑话
     @GET(APP_DOMAIN+"getJoke")

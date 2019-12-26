@@ -17,7 +17,7 @@ import swust.yuqiaodan.tomatoapp.mvp.contract.NewsContract;
 import swust.yuqiaodan.tomatoapp.mvp.model.api.Api;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.BaseResponse;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JokeEntity;
-import swust.yuqiaodan.tomatoapp.mvp.model.entity.NewsEntity;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.OpenApiNewsBean;
 
 
 /**
@@ -52,7 +52,7 @@ public class NewsModel extends BaseModel implements NewsContract.Model {
     }
 
     @Override
-    public Observable<BaseResponse<List<NewsEntity>>> getNews(int page, int count) {
+    public Observable<BaseResponse<List<OpenApiNewsBean>>> getOprnApiNews(int page, int count) {
         return mRepositoryManager
                 .obtainRetrofitService(Api.class)
                 .getNews(String.valueOf(page), String.valueOf(count));

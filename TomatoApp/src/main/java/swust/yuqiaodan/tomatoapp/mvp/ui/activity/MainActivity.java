@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.design.widget.TabLayout;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -34,7 +35,6 @@ import swust.yuqiaodan.tomatoapp.mvp.ui.adapter.MainTabAdapter;
 import swust.yuqiaodan.tomatoapp.mvp.ui.fragment.HomeFragment;
 import swust.yuqiaodan.tomatoapp.mvp.ui.fragment.MenuFragment;
 import swust.yuqiaodan.tomatoapp.mvp.ui.fragment.NewsFragment;
-import swust.yuqiaodan.tomatoapp.mvp.ui.fragment.WeatherFragment;
 
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
@@ -67,6 +67,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        //防止键盘自动弹出
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         initFragment();
     }
