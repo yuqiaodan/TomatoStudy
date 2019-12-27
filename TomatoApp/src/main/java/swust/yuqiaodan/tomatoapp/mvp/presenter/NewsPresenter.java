@@ -20,6 +20,7 @@ import swust.yuqiaodan.tomatoapp.app.utils.RxUtils;
 import swust.yuqiaodan.tomatoapp.mvp.contract.NewsContract;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.BaseResponse;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuNewsBean;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuSearchNewsBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JokeEntity;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.NewsBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.OpenApiNewsBean;
@@ -55,6 +56,36 @@ public class NewsPresenter extends BasePresenter<NewsContract.Model, NewsContrac
 
 
 
+    public void searchNews(String searchKey){
+
+        RxUtils.apply(mModel.searchNews(searchKey), mRootView)
+                .subscribe(new ErrorHandleSubscriber<JiSuSearchNewsBean>(mErrorHandler) {
+                    @Override
+                    public void onNext(JiSuSearchNewsBean jiSuSearchNewsBean) {
+
+                        List<NewsBean> showData = new ArrayList<>();
+                        for (JiSuSearchNewsBean.ResultBean.ListBean listBean : jiSuSearchNewsBean.getResult().getList()) {
+
+                            NewsBean newsBean = new NewsBean();
+                            newsBean.setUrl(listBean.getUrl());
+                            newsBean.setImageUrl(listBean.getPic());
+                            newsBean.setTime(listBean.getTime());
+                            newsBean.setTitle(listBean.getTitle());
+                            //OpenApi获取的新闻默认来源：网易新闻
+                            newsBean.setSource(listBean.getSrc());
+                            //这个接口没有直接返回html
+                            newsBean.setHtmlContent(listBean.getContent());
+                            showData.add(newsBean);
+                        }
+
+                        mRootView.showNews(showData);
+                    }
+                });
+
+
+
+    }
+
     public void getJoke(String type, boolean isRefresh) {
         RxUtils.apply(mModel.getJoke(0, 10, type), mRootView)
                 .subscribe(new ErrorHandleSubscriber<BaseResponse<List<JokeEntity>>>(mErrorHandler) {
@@ -68,7 +99,6 @@ public class NewsPresenter extends BasePresenter<NewsContract.Model, NewsContrac
 
 
     public void getNews(String channel, int page) {
-
         if (Constants.REALTIME.equals(channel)) {//因为数据来源接口不同 所以“实时”作为一个单独的频道
             RxUtils.apply(mModel.getWangYiNews(page, 10), mRootView)
                     .subscribe(new ErrorHandleSubscriber<BaseResponse<List<OpenApiNewsBean>>>(mErrorHandler) {
@@ -83,7 +113,7 @@ public class NewsPresenter extends BasePresenter<NewsContract.Model, NewsContrac
                                 newsBean.setTime(openApiNewsBean.getPasstime());
                                 newsBean.setTitle(openApiNewsBean.getTitle());
                                 //OpenApi获取的新闻默认来源：网易新闻
-                                newsBean.setSource("网易新闻客户端");
+                                newsBean.setSource(Constants.getSource());
                                 //这个接口没有直接返回html
                                 newsBean.setHtmlContent("");
                                 showData.add(newsBean);

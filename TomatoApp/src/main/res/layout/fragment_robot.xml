@@ -1,0 +1,65 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="swust.yuqiaodan.tomatoapp.mvp.ui.fragment.RobotFragment"
+    android:orientation="vertical"
+    >
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/chat_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        tools:listitem="@layout/item_robot_chat"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/recycleview"
+        android:gravity="center_vertical"
+        >
+
+        <EditText
+            android:id="@+id/chat_edit"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="25dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_round_white"
+            android:gravity="center_vertical"
+            android:inputType="text"
+            android:textSize="20sp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/black"
+            />
+
+        <TextView
+            android:id="@+id/chat_sendmsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_round_main_blue"
+            android:text="发送"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:textSize="16sp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:textColor="@color/white"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="18dp"
+            />
+
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

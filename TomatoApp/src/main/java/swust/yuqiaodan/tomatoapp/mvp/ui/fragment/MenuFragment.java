@@ -27,6 +27,7 @@ import cn.bingoogolapple.bgabanner.BGALocalImageSize;
 import swust.yuqiaodan.tomatoapp.R;
 import swust.yuqiaodan.tomatoapp.di.component.DaggerMainComponent;
 import swust.yuqiaodan.tomatoapp.mvp.contract.MainContract;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.ChatBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.WeatherEntity;
 import swust.yuqiaodan.tomatoapp.mvp.presenter.MainPresenter;
 import swust.yuqiaodan.tomatoapp.mvp.ui.UiModel.ModelMainItem;
@@ -143,12 +144,17 @@ public class MenuFragment extends BaseFragment<MainPresenter> implements MainCon
     }
 
     @Override
-    public void showWeather(WeatherEntity weatherEntity) {//天气接口错误 以后再说
+    public void showWeather(WeatherEntity weatherEntity) {
         String tem_value;
         tem_value = weatherEntity.getData().get(0).getTem2() + "~" + weatherEntity.getData().get(0).getTem1();
         tem.setText(tem_value);
         city.setText(weatherEntity.getCity());
         weather.setText(weatherEntity.getData().get(0).getWea());
+
+    }
+
+    @Override
+    public void showChatContent(ChatBean chatBean) {
 
     }
 

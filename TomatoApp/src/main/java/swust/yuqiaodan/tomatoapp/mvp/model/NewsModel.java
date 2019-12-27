@@ -18,6 +18,7 @@ import swust.yuqiaodan.tomatoapp.mvp.contract.NewsContract;
 import swust.yuqiaodan.tomatoapp.mvp.model.api.Api;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.BaseResponse;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuNewsBean;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuSearchNewsBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JokeEntity;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.OpenApiNewsBean;
 
@@ -59,20 +60,27 @@ public class NewsModel extends BaseModel implements NewsContract.Model {
                 .obtainRetrofitService(Api.class)
                 .getWangYiNews(String.valueOf(page), String.valueOf(count));
     }
+
     @Override
     public Observable<BaseResponse<List<JokeEntity>>> getJoke(int page, int count, String type) {
         return mRepositoryManager
                 .obtainRetrofitService(Api.class)
-                .getJoke(String.valueOf(page), String.valueOf(count),type);
+                .getJoke(String.valueOf(page), String.valueOf(count), type);
     }
 
 
     @Override
-    public Observable<JiSuNewsBean> getJiSuNews(String channel,int page) {
+    public Observable<JiSuNewsBean> getJiSuNews(String channel, int page) {
         return mRepositoryManager
                 .obtainRetrofitService(Api.class)
-                .getJiSuNews(channel,String.valueOf(page),"10", Constants.JISU_APP_KEY);
+                .getJiSuNews(channel, String.valueOf(page), "10", Constants.JISU_APP_KEY);
     }
 
+    @Override
+    public Observable<JiSuSearchNewsBean> searchNews(String keyword) {
+        return mRepositoryManager
+                .obtainRetrofitService(Api.class)
+                .searchNews(keyword, Constants.JISU_APP_KEY);
+    }
 
 }

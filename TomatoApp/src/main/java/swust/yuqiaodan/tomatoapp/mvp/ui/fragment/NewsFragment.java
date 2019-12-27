@@ -30,7 +30,6 @@ import java.util.List;
 import butterknife.BindView;
 import swust.yuqiaodan.tomatoapp.di.component.DaggerNewsComponent;
 import swust.yuqiaodan.tomatoapp.mvp.contract.NewsContract;
-import swust.yuqiaodan.tomatoapp.mvp.model.entity.JokeEntity;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.NewsBean;
 import swust.yuqiaodan.tomatoapp.mvp.presenter.NewsPresenter;
 
@@ -47,9 +46,9 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
 @SuppressLint("ValidFragment")
 public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsContract.View {
 
-    @BindView(R.id.recyclerView)
+    @BindView(R.id.recyclerView_News)
     RecyclerView mRecyclerView;
-    @BindView(R.id.refreshLayout)
+    @BindView(R.id.refreshLayout_News)
     SmartRefreshLayout refreshLayout;
 
     List<NewsBean> mData;
@@ -87,7 +86,6 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
         page = 1;
         initRefreshLayout();
         initRecycleView();
-
         mPresenter.getNews(channel,page);
 
     }
@@ -101,7 +99,7 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
 
-                page = 1+10;
+                page = 1;
 
                 mPresenter.getNews(channel,page);
 
@@ -111,7 +109,7 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
-                page = page + 1;
+                page = page + 10;
                 mPresenter.getNews(channel,page);
                 refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
             }
@@ -144,7 +142,10 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
 
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 
     @Override
     public void showNews(List<NewsBean> data) {

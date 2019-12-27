@@ -7,12 +7,14 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/mainBlue"
         android:clipToPadding="true"
+        android:id="@+id/main_bang"
         android:fitsSystemWindows="true"
-        >
+        android:orientation="horizontal">
     </LinearLayout>
 
     <LinearLayout
@@ -21,9 +23,7 @@
         android:layout_height="60dp"
         android:background="@color/mainBlue"
         android:gravity="center_vertical"
-
         >
-
         <LinearLayout
             android:id="@+id/view_search"
             android:layout_width="0dp"
@@ -85,6 +85,7 @@
         app:tabIndicatorHeight="2dp"
         app:tabMode="fixed"
         app:tabSelectedTextColor="#88E7FF"
+        app:tabTextAppearance="@style/TabLayoutTextStyle"
         app:tabTextColor="@color/black"></android.support.design.widget.TabLayout>
 
 

@@ -11,8 +11,10 @@ import com.jess.arms.di.scope.ActivityScope;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import swust.yuqiaodan.tomatoapp.app.Constants;
 import swust.yuqiaodan.tomatoapp.mvp.contract.MainContract;
 import swust.yuqiaodan.tomatoapp.mvp.model.api.Api;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuRobotQaBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.WeatherEntity;
 
 
@@ -49,6 +51,13 @@ public class MainModel extends BaseModel implements MainContract.Model {
 
     @Override
     public Observable<WeatherEntity> getWeather(String version, String city) {
-        return mRepositoryManager.obtainRetrofitService(Api.class).getWeather(version,city,"39719144","AKJr6R6X");
+        return mRepositoryManager.obtainRetrofitService(Api.class).getWeather(version, city, "39719144", "AKJr6R6X");
+    }
+
+    @Override
+    public Observable<JiSuRobotQaBean> chatWithRobot(String question) {
+
+        return mRepositoryManager.obtainRetrofitService(Api.class).chatWithRobot(Constants.JISU_APP_KEY, question);
+
     }
 }

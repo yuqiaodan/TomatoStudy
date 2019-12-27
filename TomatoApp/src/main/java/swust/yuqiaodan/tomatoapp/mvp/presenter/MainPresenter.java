@@ -9,13 +9,22 @@ import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.http.imageloader.ImageLoader;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.reactivex.functions.Consumer;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 
 import javax.inject.Inject;
 
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
+import swust.yuqiaodan.tomatoapp.app.Constants;
 import swust.yuqiaodan.tomatoapp.app.utils.RxUtils;
 import swust.yuqiaodan.tomatoapp.mvp.contract.MainContract;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.ChatBean;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuRobotQaBean;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuSearchNewsBean;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.NewsBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.WeatherEntity;
 
 
@@ -48,16 +57,30 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
     }
 
     @SuppressLint("CheckResult")
-    public void getWeather(){
-        RxUtils.apply(mModel.getWeather("v1","成都"),mRootView).subscribe(new Consumer<WeatherEntity>() {
+    public void getWeather() {
+        RxUtils.apply(mModel.getWeather("v1", "成都"), mRootView).subscribe(new Consumer<WeatherEntity>() {
             @Override
             public void accept(WeatherEntity weatherEntity) throws Exception {
                 mRootView.showWeather(weatherEntity);
             }
         });
-
-
     }
+
+
+    public void chatWithRobot(String question) {
+
+        RxUtils.apply(mModel.chatWithRobot(question), mRootView)
+                .subscribe(new ErrorHandleSubscriber<JiSuRobotQaBean>(mErrorHandler) {
+                    @Override
+                    public void onNext(JiSuRobotQaBean jiSuRobotQaBean) {
+                        ChatBean chatBean = new ChatBean();
+                        chatBean.setLocation(Constants.LEFT);
+                        chatBean.setContent(jiSuRobotQaBean.getResult().getContent());
+                        mRootView.showChatContent(chatBean);
+                    }
+                });
+    }
+
 
     @Override
     public void onDestroy() {
