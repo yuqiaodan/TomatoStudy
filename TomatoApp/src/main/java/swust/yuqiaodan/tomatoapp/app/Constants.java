@@ -13,6 +13,8 @@ public class Constants {
     public static final String LEFT="left";
     public static final String RIGHT="right";
 
+    public static final String QRResult="QRResult";
+
     //以下两个频道来源不同
     public static final String REALTIME="实时";
     public static final String JOKE="搞笑";

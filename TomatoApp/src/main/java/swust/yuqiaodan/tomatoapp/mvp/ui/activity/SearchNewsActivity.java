@@ -99,7 +99,7 @@ public class SearchNewsActivity extends BaseActivity<NewsPresenter> implements N
                     showMessage("请输入搜索内容");
                 } else {
                     mPresenter.searchNews(searchKey);
-
+                    searchEdit.setText("");
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     // 隐藏软键盘
                     imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);

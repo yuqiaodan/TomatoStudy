@@ -38,8 +38,6 @@ import swust.yuqiaodan.tomatoapp.mvp.ui.adapter.ChatAdapter;
 /**
  * 机器人对话的初步想法
  * <p>
- * 1.消息提示音
- * 2.消息过滤（含广告的 www.buy....）
  */
 
 public class RobotFragment extends BaseFragment<MainPresenter> implements MainContract.View {

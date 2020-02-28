@@ -29,6 +29,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import swust.yuqiaodan.tomatoapp.R;
+import swust.yuqiaodan.tomatoapp.app.Constants;
 import swust.yuqiaodan.tomatoapp.app.EventBusTags;
 import swust.yuqiaodan.tomatoapp.di.component.DaggerMainComponent;
 import swust.yuqiaodan.tomatoapp.mvp.contract.MainContract;
@@ -58,6 +59,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     ImageView viewScan;
     @BindView(R.id.main_bang)
     LinearLayout mainBang;
+
+    private int SCANQRCODE = 1011;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -146,6 +149,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 break;
             case R.id.main_scan:
                 //扫码功能暂无
+                Intent scanIntent = new Intent(this, ScanQRActivity.class);
+                startActivityForResult(scanIntent, SCANQRCODE);
                 break;
 
         }
@@ -200,7 +205,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     }
 
 
-
     private long mBackPressed;
     private static final int TIME_INTERVAL = 2000;
 
@@ -215,5 +219,29 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         mBackPressed = System.currentTimeMillis();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SCANQRCODE) {
+                String qRResult = "";
+                qRResult = data.getStringExtra(Constants.QRResult);
+
+                if (qRResult.startsWith("http")) {
+                    //如果是扫描到的http开头的网址
+                    //跳转到网页加载页面
+                    Intent intent = new Intent(this, MyWebActivity.class);//跳转到新闻网页
+                    intent.putExtra("URL", qRResult);
+                    startActivity(intent);
+                } else {
+                    //如果是其他字符串
+                    showMessage("扫描结果："+qRResult);
+                }
+
+            }
+        }
+
+
+    }
 }
 

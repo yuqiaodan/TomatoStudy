@@ -1,5 +1,6 @@
 package swust.yuqiaodan.tomatoapp.mvp.ui.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.FrameLayout;
@@ -8,28 +9,21 @@ import com.google.zxing.Result;
 import java.util.ArrayList;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import swust.yuqiaodan.tomatoapp.R;
+import swust.yuqiaodan.tomatoapp.app.Constants;
 
 public class ScanQRActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
-
-    FrameLayout content_frame;//放置ZXingScannerView
-    TextView cancel_scan;//展示扫码得到的结果
-    ArrayList<String> resultList;//存放多次扫描的结果
+    FrameLayout contentFrame;//放置ZXingScannerView
     ZXingScannerView zBarScannerView;//框架内部的扫码view
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_qr);
         //初始化一些界面组件
-        resultList=new ArrayList<>();
-        content_frame=findViewById(R.id.content_frame);
-        cancel_scan=findViewById(R.id.cancel_scan);
-
+        contentFrame=findViewById(R.id.content_frame);
         //初始化扫码view
         zBarScannerView=new ZXingScannerView(this);
         //添加zBarScannerView到FrameLayout
-        content_frame.addView(zBarScannerView);
+        contentFrame.addView(zBarScannerView);
         //添加扫码结果回调
         zBarScannerView.setResultHandler(this);
         //自动对焦
@@ -49,9 +43,15 @@ public class ScanQRActivity extends AppCompatActivity implements ZXingScannerVie
          *
          * */
 
-        resultList.add(result.getText());//暂存扫码结果
-        cancel_scan.setText(result.getText()+"("+resultList.size()+")");//展示结果
-        scanAgain();//重新开始下一次扫码
+        //resultList.add(result.getText());//暂存扫码结果
+
+        //scanAgain();//重新开始下一次扫码
+
+        //获取到扫码结果 然后传递回到main
+        Intent intent = new Intent();
+        intent.putExtra(Constants.QRResult, result.getText());
+        setResult(RESULT_OK, intent);
+        finish();
 
     }
     public void scanAgain(){//重新开始下一次扫码
