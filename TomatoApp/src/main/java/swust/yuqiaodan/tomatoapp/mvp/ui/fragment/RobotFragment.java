@@ -30,6 +30,7 @@ import swust.yuqiaodan.tomatoapp.app.EventBusTags;
 import swust.yuqiaodan.tomatoapp.di.component.DaggerMainComponent;
 import swust.yuqiaodan.tomatoapp.mvp.contract.MainContract;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.ChatBean;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.TodayHistoryBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.WeatherEntity;
 import swust.yuqiaodan.tomatoapp.mvp.presenter.MainPresenter;
 import swust.yuqiaodan.tomatoapp.mvp.ui.adapter.ChatAdapter;
@@ -114,7 +115,7 @@ public class RobotFragment extends BaseFragment<MainPresenter> implements MainCo
         //添加第一个默认对话
         ChatBean chatBean = new ChatBean();
         chatBean.setLocation(Constants.LEFT);
-        chatBean.setContent("您好，这里的您的专属聊天对象，小i机器人，我知天文晓地理，快来和我聊天呀");
+        chatBean.setContent("您好，这里的您的专属聊天伙伴，小i机器人，我知天文晓地理，快来和我聊天呀");
         mData.add(chatBean);
 
         mAdapter = new ChatAdapter(mData);
@@ -139,6 +140,11 @@ public class RobotFragment extends BaseFragment<MainPresenter> implements MainCo
         mAdapter.notifyDataSetChanged();
 
         mRecyclerView.scrollToPosition(mAdapter.getItemCount()-1);
+
+    }
+
+    @Override
+    public void showTodayInHistory(TodayHistoryBean todayHistoryBean) {
 
     }
 

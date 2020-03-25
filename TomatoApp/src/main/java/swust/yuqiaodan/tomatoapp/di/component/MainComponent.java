@@ -11,6 +11,7 @@ import swust.yuqiaodan.tomatoapp.mvp.contract.MainContract;
 import com.jess.arms.di.scope.ActivityScope;
 
 import swust.yuqiaodan.tomatoapp.mvp.ui.activity.MainActivity;
+import swust.yuqiaodan.tomatoapp.mvp.ui.activity.TodayInHistoryActivity;
 import swust.yuqiaodan.tomatoapp.mvp.ui.fragment.MenuFragment;
 import swust.yuqiaodan.tomatoapp.mvp.ui.fragment.RobotFragment;
 
@@ -33,7 +34,7 @@ public interface MainComponent {
     void inject(MainActivity activity);
     void inject(MenuFragment fragment);
     void inject(RobotFragment fragment);
-
+    void inject(TodayInHistoryActivity activity);
     @Component.Builder
     interface Builder {
         @BindsInstance

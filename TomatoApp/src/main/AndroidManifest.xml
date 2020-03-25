@@ -20,7 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".mvp.ui.activity.SearchNewsActivity"></activity>
+        <activity android:name=".mvp.ui.activity.TodayInHistoryActivity"></activity>
+        <activity android:name=".mvp.ui.activity.SearchNewsActivity" />
 
         <service
             android:name=".mvp.ui.activity.ServiceStudy.MyFirstService"
@@ -33,8 +34,6 @@
             android:name=".mvp.ui.activity.MyCamera.CameraActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".mvp.ui.activity.MyTakePhotoActivity" />
-        <activity android:name=".mvp.ui.activity.MusicListDetaActivity" />
-        <activity android:name=".mvp.ui.activity.MusicActivity" />
         <activity android:name=".mvp.ui.activity.MyWebActivity" />
         <activity android:name=".mvp.ui.activity.PicActivity" />
         <activity android:name=".mvp.ui.activity.ShowImageActivity" />

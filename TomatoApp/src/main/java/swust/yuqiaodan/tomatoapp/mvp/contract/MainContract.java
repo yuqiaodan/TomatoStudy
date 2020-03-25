@@ -7,6 +7,7 @@ import io.reactivex.Observable;
 import retrofit2.http.Query;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.ChatBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuRobotQaBean;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.TodayHistoryBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.WeatherEntity;
 
 
@@ -28,6 +29,8 @@ public interface MainContract {
         void showWeather(WeatherEntity weatherEntity);
 
         void showChatContent(ChatBean chatBean);
+
+        void showTodayInHistory(TodayHistoryBean todayHistoryBean);
     }
 
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
@@ -36,6 +39,7 @@ public interface MainContract {
 
         Observable<JiSuRobotQaBean> chatWithRobot(String question);
 
+        Observable<TodayHistoryBean> todayInHistory(String month,String day);
 
     }
 }

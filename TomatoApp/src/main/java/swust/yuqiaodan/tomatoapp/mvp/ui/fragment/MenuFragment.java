@@ -31,11 +31,7 @@ import swust.yuqiaodan.tomatoapp.mvp.model.entity.ChatBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.WeatherEntity;
 import swust.yuqiaodan.tomatoapp.mvp.presenter.MainPresenter;
 import swust.yuqiaodan.tomatoapp.mvp.ui.UiModel.ModelMainItem;
-import swust.yuqiaodan.tomatoapp.mvp.ui.activity.MusicActivity;
 import swust.yuqiaodan.tomatoapp.mvp.ui.activity.PicActivity;
-import swust.yuqiaodan.tomatoapp.mvp.ui.activity.MyTakePhotoActivity;
-import swust.yuqiaodan.tomatoapp.mvp.ui.activity.ScanQRActivity;
-import swust.yuqiaodan.tomatoapp.mvp.ui.activity.ServiceStudy.ServiceStudyActivity;
 import swust.yuqiaodan.tomatoapp.mvp.ui.adapter.MainMenuAdapter;
 
 public class MenuFragment extends BaseFragment<MainPresenter> implements MainContract.View {
@@ -79,12 +75,12 @@ public class MenuFragment extends BaseFragment<MainPresenter> implements MainCon
 
     void initRecycleView() {
         mData = new ArrayList<>();
-        mData.add(new ModelMainItem("音乐", R.drawable.pikachu_sit, MusicActivity.class));
-        mData.add(new ModelMainItem("拍照的艺术", R.drawable.pikachu_sit, MyTakePhotoActivity.class));
-        mData.add(new ModelMainItem("Retrofit学习", R.drawable.pikachu_sit, null));
-        mData.add(new ModelMainItem("扫码的艺术", R.drawable.pikachu_sit, ScanQRActivity.class));
-        mData.add(new ModelMainItem("Service学习", R.drawable.pikachu_sit, ServiceStudyActivity.class));
-        mData.add(new ModelMainItem("EventBus学习", R.drawable.pikachu_sit, null));
+        mData.add(new ModelMainItem("历史上的今天", R.drawable.pikachu_sit, null));
+        mData.add(new ModelMainItem("null", R.drawable.pikachu_sit, null));
+        mData.add(new ModelMainItem("null", R.drawable.pikachu_sit, null));
+        mData.add(new ModelMainItem("null", R.drawable.pikachu_sit, null));
+        mData.add(new ModelMainItem("null", R.drawable.pikachu_sit, null));
+        mData.add(new ModelMainItem("null", R.drawable.pikachu_sit, null));
         mData.add(new ModelMainItem("null", R.drawable.pikachu_sit, null));
         mData.add(new ModelMainItem("null", R.drawable.pikachu_sit, null));
         mData.add(new ModelMainItem("null", R.drawable.pikachu_sit, null));

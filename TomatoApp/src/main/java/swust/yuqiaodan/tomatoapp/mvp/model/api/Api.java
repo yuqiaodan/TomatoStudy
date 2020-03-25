@@ -11,10 +11,9 @@ import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuNewsBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuRobotQaBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuSearchNewsBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JokeEntity;
-import swust.yuqiaodan.tomatoapp.mvp.model.entity.MusicBean.MusicRankBean;
-import swust.yuqiaodan.tomatoapp.mvp.model.entity.MusicBean.MusicSearchBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.OpenApiNewsBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.PicEntity;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.TodayHistoryBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.WeatherEntity;
 
 /**
@@ -31,14 +30,6 @@ public interface Api {
     String WEATHER_API = "https://www.tianqiapi.com/api";
     //极速数据baseurl 新闻来源二
     String JISUDATA_BASEURL = "https://api.jisuapi.com/";
-
-
-    //请求音乐
-    @GET(APP_DOMAIN + "musicRankings")
-    Observable<BaseResponse<List<MusicRankBean>>> getMusicRank();
-
-    @GET(APP_DOMAIN + "searchMusic")
-    Observable<BaseResponse<List<MusicSearchBean>>> getSearchMusic(@Query("name") String name);
 
     //网易新闻
     @GET(APP_DOMAIN + "getWangYiNews")
@@ -69,6 +60,11 @@ public interface Api {
     //https://api.jisuapi.com/iqa/query?appkey=yourappkey&question=杭州天气
     @GET(JISUDATA_BASEURL + "iqa/query")
     Observable<JiSuRobotQaBean> chatWithRobot(@Query("appkey") String appkey, @Query("question") String question);
+
+    //历史的今天
+    //https://api.jisuapi.com/todayhistory/query?appkey=******&month=1&day=2
+    @GET(JISUDATA_BASEURL + "todayhistory/query")
+    Observable<TodayHistoryBean> todayInHistory(@Query("appkey") String appkey, @Query("month") String month, @Query("day") String day);
 
 
 }

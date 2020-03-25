@@ -25,6 +25,7 @@ import swust.yuqiaodan.tomatoapp.mvp.model.entity.ChatBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuRobotQaBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuSearchNewsBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.NewsBean;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.TodayHistoryBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.WeatherEntity;
 
 
@@ -66,9 +67,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
         });
     }
 
-
     public void chatWithRobot(String question) {
-
         RxUtils.apply(mModel.chatWithRobot(question), mRootView)
                 .subscribe(new ErrorHandleSubscriber<JiSuRobotQaBean>(mErrorHandler) {
                     @Override
@@ -79,6 +78,19 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
                         mRootView.showChatContent(chatBean);
                     }
                 });
+    }
+
+    public void todayInHistory(String month,String day){
+        RxUtils.apply(mModel.todayInHistory(month,day), mRootView)
+                .subscribe(new ErrorHandleSubscriber<TodayHistoryBean>(mErrorHandler) {
+                    @Override
+                    public void onNext(TodayHistoryBean todayHistoryBean) {
+                        mRootView.showTodayInHistory(todayHistoryBean);
+                    }
+                });
+
+
+
     }
 
 
