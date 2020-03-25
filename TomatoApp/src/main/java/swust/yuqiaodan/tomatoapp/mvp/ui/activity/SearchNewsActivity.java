@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
+import com.vondear.rxui.view.dialog.RxDialogShapeLoading;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,7 @@ public class SearchNewsActivity extends BaseActivity<NewsPresenter> implements N
     String searchKey;
     List<NewsBean> mData;
     NewsAdapter mAdapter;
-
+    RxDialogShapeLoading rxDialogShapeLoading;
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerNewsComponent //如找不到该类,请编译一下项目
@@ -63,6 +64,7 @@ public class SearchNewsActivity extends BaseActivity<NewsPresenter> implements N
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        rxDialogShapeLoading = new RxDialogShapeLoading(this);
         initRecycleView();
     }
 
@@ -120,5 +122,17 @@ public class SearchNewsActivity extends BaseActivity<NewsPresenter> implements N
     public void showMessage(@NonNull String message) {
         checkNotNull(message);
         ArmsUtils.snackbarText(message);
+    }
+
+    @Override
+    public void showLoading() {
+        //显示加载框
+        rxDialogShapeLoading.show();
+    }
+
+    @Override
+    public void hideLoading() {
+        //隐藏加载框
+        rxDialogShapeLoading.cancel();
     }
 }

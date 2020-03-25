@@ -15,9 +15,12 @@ import android.view.ViewGroup;
 import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
+import com.scwang.smartrefresh.header.DropBoxHeader;
+import com.scwang.smartrefresh.header.FlyRefreshHeader;
 import com.scwang.smartrefresh.header.WaterDropHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -53,10 +56,8 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
 
     List<NewsBean> mData;
     NewsAdapter mAdapter;
-
     private int page;//分页发送请求（页数） 每页默认10条新闻 在P中修改
-
-    private  String channel;
+    public String channel;
 
      @SuppressLint("ValidFragment")
      public NewsFragment(String channel){
@@ -83,17 +84,18 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
     public void initData(@Nullable Bundle savedInstanceState) {
         RxTool.init(this.mContext);
 
-        page = 1;
+        //page = 1;
         initRefreshLayout();
         initRecycleView();
-        mPresenter.getNews(channel,page);
+        refreshLayout.autoRefresh();//直接自动刷新 同时就显示了加载动画了
+        //mPresenter.getNews(channel,page);
 
     }
 
     void initRefreshLayout() {
         //设置加载头和脚样式
-        refreshLayout.setRefreshHeader(new WaterDropHeader(this.mContext));
-        refreshLayout.setRefreshFooter(new ClassicsFooter(this.mContext));
+        refreshLayout.setRefreshHeader(new DropBoxHeader(this.mContext));
+            refreshLayout.setRefreshFooter(new BallPulseFooter(this.mContext));
 
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override

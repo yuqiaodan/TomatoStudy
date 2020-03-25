@@ -26,9 +26,13 @@ import com.jess.arms.utils.ArmsUtils;
 import com.jess.arms.utils.DataHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
 
 import butterknife.BindView;
 import swust.yuqiaodan.tomatoapp.R;
@@ -57,10 +61,16 @@ public class HomeFragment extends BaseFragment<NewsPresenter> implements NewsCon
     @BindView(R.id.channel_menu)
     ImageView channelSelect;
 
-    private List<Fragment> fragmentList;
+    private List<NewsFragment> fragmentList;
     MainNewsFragmentTabAdapter mainNewsFragmentTabAdapter;
 
     Set<String> newsChannelsSelected;//已经选择的新闻频道
+
+    /**
+     * 新增加的这个List channelsSelected 用于记录newsChannelsSelected的内容 并且排序
+     * newsChannelsSelected为Set类型无法进行排序
+     */
+    public List<String> channelsSelected;
 
     public SharedPreferences mSharedPreferences;
 
@@ -82,7 +92,7 @@ public class HomeFragment extends BaseFragment<NewsPresenter> implements NewsCon
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        mSharedPreferences= PreferenceManager.getDefaultSharedPreferences(getContext());
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         initFragment();
         initChannelSelect();
 
@@ -91,17 +101,24 @@ public class HomeFragment extends BaseFragment<NewsPresenter> implements NewsCon
 
     private void initFragment() {
         fragmentList = new ArrayList<>();
+        channelsSelected = new ArrayList<>();
         //创建SharedPreferences中保存的set数据的一个副本 来进行操作 避免进行数据混淆
         //因为如果是同样的对象newsChannelsSelected 进行add 和 remove后 会导致混淆
-        newsChannelsSelected=new HashSet<>(mSharedPreferences.getStringSet(Constants.NEWSCHANNELS, new HashSet<>()));
+        newsChannelsSelected = new HashSet<>(mSharedPreferences.getStringSet(Constants.NEWSCHANNELS, new HashSet<>()));
 
 
-        if(newsChannelsSelected.size()==0){
+        if (newsChannelsSelected.size() == 0) {
             //第一次启动 如果没有任何频道 则选择默认的
             newsChannelsSelected.addAll(Constants.channelDefaultSelected);
         }
 
-        for (String channel : newsChannelsSelected) {
+        channelsSelected.addAll(newsChannelsSelected);
+
+        if (channelsSelected.size() > 1) {
+            sortChannel();
+        }
+
+        for (String channel : channelsSelected) {
             fragmentList.add(new NewsFragment(channel));
         }
 
@@ -109,7 +126,8 @@ public class HomeFragment extends BaseFragment<NewsPresenter> implements NewsCon
         //设置fragment
         mainNewsFragmentTabAdapter.setFragments(fragmentList);
         //设置标题
-        mainNewsFragmentTabAdapter.setTitles(newsChannelsSelected.toArray(new String[0]));
+        //mainNewsFragmentTabAdapter.setTitles(newsChannelsSelected.toArray(new String[0]));
+        mainNewsFragmentTabAdapter.setTitles(channelsSelected.toArray(new String[0]));
 
         viewPager.setAdapter(mainNewsFragmentTabAdapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -141,11 +159,11 @@ public class HomeFragment extends BaseFragment<NewsPresenter> implements NewsCon
                 //选择弹框的布局
                 View dialogView = View.inflate(getContext(), R.layout.dialog_channel_select, null);
 
-                RecyclerView channelList=dialogView.findViewById(R.id.channel_list);
+                RecyclerView channelList = dialogView.findViewById(R.id.channel_list);
 
                 //设置布局
                 channelList.setLayoutManager(new LinearLayoutManager(getContext()));
-                ChannelListAdapter channelListAdapter=new ChannelListAdapter(Constants.allChannelList,newsChannelsSelected);
+                ChannelListAdapter channelListAdapter = new ChannelListAdapter(Constants.allChannelList, newsChannelsSelected);
                 channelList.setAdapter(channelListAdapter);
 
 
@@ -153,14 +171,11 @@ public class HomeFragment extends BaseFragment<NewsPresenter> implements NewsCon
                     @Override
                     public void onItemClick(@NonNull View view, int viewType, @NonNull Object data, int position) {
 
-                        if(newsChannelsSelected.contains(Constants.allChannelList.get(position))){
+                        if (newsChannelsSelected.contains(Constants.allChannelList.get(position))) {
                             newsChannelsSelected.remove(Constants.allChannelList.get(position));
-                        }else{
+                        } else {
                             newsChannelsSelected.add(Constants.allChannelList.get(position));
                         }
-
-                        Log.d("选择的频道",newsChannelsSelected.toString());
-
                     }
                 });
                 new AlertDialog.Builder(getContext())
@@ -169,32 +184,35 @@ public class HomeFragment extends BaseFragment<NewsPresenter> implements NewsCon
                         .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                               //do nothing
+                                //do nothing
 
                             }
                         })
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-
-                                Log.d("选择的频道---保存的数据",newsChannelsSelected.toString());
-
+                                if (newsChannelsSelected.size() < 1) {
+                                    showMessage("请至少选择一个新闻频道");
+                                    return;
+                                }
                                 mSharedPreferences.edit().putStringSet(Constants.NEWSCHANNELS, newsChannelsSelected).apply();
-
-                                Log.d("选择的频道---保存后的数据",mSharedPreferences.getStringSet(Constants.NEWSCHANNELS, new HashSet<>()).toString());
-
                                 //保存配置
-                                //DataHelperExtension.setSetSF(getContext(),Constants.NEWSCHANNELS,newsChannelsSelected);
+                                channelsSelected.clear();
+                                channelsSelected.addAll(newsChannelsSelected);
 
+                                if (channelsSelected.size() > 1) {
+                                    sortChannel();
+                                }
                                 fragmentList.clear();
-                                for (String channel : newsChannelsSelected) {
+                                for (String channel : channelsSelected) {
                                     fragmentList.add(new NewsFragment(channel));
                                 }
+
                                 //设置fragment
                                 mainNewsFragmentTabAdapter.setFragments(fragmentList);
-                                //设置标题
-                                mainNewsFragmentTabAdapter.setTitles(newsChannelsSelected.toArray(new String[0]));
 
+                                //设置标题
+                                mainNewsFragmentTabAdapter.setTitles(channelsSelected.toArray(new String[0]));
 
                                 mainNewsFragmentTabAdapter.notifyDataSetChanged();
                             }
@@ -204,6 +222,30 @@ public class HomeFragment extends BaseFragment<NewsPresenter> implements NewsCon
             }
         });
     }
+
+
+    /**
+     * 用于频道排序
+     * Set数据类型是没有排序的 所以选择完频道后 需要进行按照一定规则一个简单的排序
+     */
+    public void sortChannel() {
+        Map<Integer, String> channelsMap = new HashMap<>();
+        for (String selectedChannel : newsChannelsSelected) {
+            channelsMap.put(Constants.allChannelList.indexOf(selectedChannel), selectedChannel);
+
+        }
+        List<Integer> channelNumberList = new ArrayList<>();
+        for (int key : channelsMap.keySet()) {
+            channelNumberList.add(key);
+        }
+
+        Collections.sort(channelNumberList);
+        channelsSelected.clear();
+        for (int key : channelNumberList) {
+            channelsSelected.add(channelsMap.get(key));
+        }
+    }
+
 
     @Override
     public void setData(@Nullable Object data) {
