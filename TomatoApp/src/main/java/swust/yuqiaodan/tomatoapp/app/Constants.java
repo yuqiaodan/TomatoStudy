@@ -1,9 +1,13 @@
 package swust.yuqiaodan.tomatoapp.app;
 
+import android.content.SharedPreferences;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public class Constants {
 
@@ -15,14 +19,14 @@ public class Constants {
 
     public static final String QRResult="QRResult";
 
+    public static final String NEWSCHANNELS="NewsChannels";
     //以下两个频道来源不同
     public static final String REALTIME="实时";
     public static final String JOKE="搞笑";
 
-    public static final ArrayList<String> allChannelList = new ArrayList<String>(Arrays.asList(
+    public static final List<String> allChannelList = new ArrayList<>(Arrays.asList(
             "头条",
             REALTIME,
-            JOKE,
             "新闻",
             "国内",
             "国际",
@@ -40,18 +44,14 @@ public class Constants {
             "健康",
             "育儿"));
 
-    //这里应该保存在本地 目前就这样
-    public static final ArrayList<String> channelSelected = new ArrayList<String>(Arrays.asList(
+    //目前默认必须选择以下三个频道
+    public static final Set<String> channelDefaultSelected = new HashSet<String>(Arrays.asList(
             "头条",
             REALTIME,
-            "新闻",
-            "国内",
-            "国际"
+            "新闻"
     ));
 
-    public static ArrayList<String> getChannelSelected(){
-        return channelSelected;
-    }
+
 
 
     //这里应该保存在本地 目前就这样

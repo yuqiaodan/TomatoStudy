@@ -11,7 +11,7 @@ import swust.yuqiaodan.tomatoapp.app.Constants;
 
 //首页新闻fragment适配器
 public class MainNewsFragmentTabAdapter extends FragmentPagerAdapter {
-    private String[] mTitles = Constants.getChannelSelected().toArray(new String[0]);
+    private String[] mTitles;
 
     private List<Fragment> fragments;
 
