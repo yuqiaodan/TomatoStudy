@@ -105,8 +105,6 @@ public class HomeFragment extends BaseFragment<NewsPresenter> implements NewsCon
         //创建SharedPreferences中保存的set数据的一个副本 来进行操作 避免进行数据混淆
         //因为如果是同样的对象newsChannelsSelected 进行add 和 remove后 会导致混淆
         newsChannelsSelected = new HashSet<>(mSharedPreferences.getStringSet(Constants.NEWSCHANNELS, new HashSet<>()));
-
-
         if (newsChannelsSelected.size() == 0) {
             //第一次启动 如果没有任何频道 则选择默认的
             newsChannelsSelected.addAll(Constants.channelDefaultSelected);

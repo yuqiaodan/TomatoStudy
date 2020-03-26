@@ -47,7 +47,8 @@ public class ActivityLifecycleCallbacksImpl implements Application.ActivityLifec
                 }
             }
             if (activity.findViewById(R.id.toolbar_title) != null) {
-                ((TextView) activity.findViewById(R.id.toolbar_title)).setText(activity.getTitle());
+                //这里全局设置了title 但是我需要在每个不同的activity中 分别显示不同的标题 所以注释掉以下内容
+                //((TextView) activity.findViewById(R.id.toolbar_title)).setText(activity.getTitle());
             }
             if (activity.findViewById(R.id.toolbar_back) != null) {
                 activity.findViewById(R.id.toolbar_back).setOnClickListener(v -> {

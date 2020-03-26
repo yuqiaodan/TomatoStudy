@@ -20,6 +20,9 @@ public class Constants {
     public static final String QRResult="QRResult";
 
     public static final String NEWSCHANNELS="NewsChannels";
+    public static final String HTMLCONTENT= "HtmlContent";
+    public static final String HTMLTITLE= "HtmlTitle";
+
     //以下两个频道来源不同
     public static final String REALTIME="实时";
     public static final String JOKE="搞笑";

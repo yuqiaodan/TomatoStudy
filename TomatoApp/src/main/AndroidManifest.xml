@@ -15,12 +15,14 @@
     <application
         android:name="com.jess.arms.base.BaseApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/circle_elves_ball"
+        android:icon="@drawable/tomato_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".mvp.ui.activity.TodayInHistoryActivity"></activity>
+        <activity android:name=".mvp.ui.activity.AboutUsActivity"></activity>
+        <activity android:name=".mvp.ui.activity.ShowHtmlActivity" />
+        <activity android:name=".mvp.ui.activity.TodayInHistoryActivity" />
         <activity android:name=".mvp.ui.activity.SearchNewsActivity" />
 
         <service

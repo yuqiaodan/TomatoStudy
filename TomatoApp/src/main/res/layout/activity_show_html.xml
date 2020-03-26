@@ -5,16 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="swust.yuqiaodan.tomatoapp.mvp.ui.activity.TodayInHistoryActivity">
-
+    tools:context="swust.yuqiaodan.tomatoapp.mvp.ui.activity.ShowHtmlActivity">
     <include
-        android:id="@+id/today_history_activity_title"
-        layout="@layout/include_title"
-        />
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/today_history_list"
+        android:id="@+id/html_title_bar"
+        layout="@layout/include_title"/>
+
+    <org.sufficientlysecure.htmltextview.HtmlTextView
+        android:id="@+id/html_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/item_today_history"
+        android:textSize="18sp"
+        android:textColor="@color/rosybrown"
+        android:padding="15dp"
         />
 </LinearLayout>
