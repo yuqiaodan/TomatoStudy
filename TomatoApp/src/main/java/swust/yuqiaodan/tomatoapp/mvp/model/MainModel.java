@@ -14,6 +14,7 @@ import io.reactivex.Observable;
 import swust.yuqiaodan.tomatoapp.app.Constants;
 import swust.yuqiaodan.tomatoapp.mvp.contract.MainContract;
 import swust.yuqiaodan.tomatoapp.mvp.model.api.Api;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.AstroFortuneBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuRobotQaBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.TodayHistoryBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.WeatherEntity;
@@ -71,5 +72,10 @@ public class MainModel extends BaseModel implements MainContract.Model {
     @Override
     public Observable<TodayHistoryBean> todayInHistory(String month, String day) {
         return mRepositoryManager.obtainRetrofitService(Api.class).todayInHistory(Constants.JISU_APP_KEY, month, day);
+    }
+
+    @Override
+    public Observable<AstroFortuneBean> getAstroFortune(String astroid, String date) {
+        return mRepositoryManager.obtainRetrofitService(Api.class).getAstroFortune(astroid,date,Constants.JISU_APP_KEY);
     }
 }

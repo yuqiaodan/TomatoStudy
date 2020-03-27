@@ -5,6 +5,7 @@ import com.jess.arms.mvp.IModel;
 
 import io.reactivex.Observable;
 import retrofit2.http.Query;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.AstroFortuneBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.ChatBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuRobotQaBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.TodayHistoryBean;
@@ -31,6 +32,8 @@ public interface MainContract {
         void showChatContent(ChatBean chatBean);
 
         void showTodayInHistory(TodayHistoryBean todayHistoryBean);
+
+        void showAstroFortune(AstroFortuneBean astroFortuneBean);
     }
 
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
@@ -40,6 +43,6 @@ public interface MainContract {
         Observable<JiSuRobotQaBean> chatWithRobot(String question);
 
         Observable<TodayHistoryBean> todayInHistory(String month,String day);
-
+        Observable<AstroFortuneBean> getAstroFortune(String astroid,String date);
     }
 }

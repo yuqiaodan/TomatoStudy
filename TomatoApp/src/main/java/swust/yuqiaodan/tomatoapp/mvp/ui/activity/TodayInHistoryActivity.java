@@ -23,6 +23,7 @@ import butterknife.BindView;
 import swust.yuqiaodan.tomatoapp.R;
 import swust.yuqiaodan.tomatoapp.di.component.DaggerMainComponent;
 import swust.yuqiaodan.tomatoapp.mvp.contract.MainContract;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.AstroFortuneBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.ChatBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.TodayHistoryBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.WeatherEntity;
@@ -65,7 +66,7 @@ public class TodayInHistoryActivity extends BaseActivity<MainPresenter> implemen
     public void initData(@Nullable Bundle savedInstanceState) {
         initRecyclerview();
         rxDialogShapeLoading = new RxDialogShapeLoading(this);//加载框dialog
-        titleDate.setText(getYear() +"-"+ getMonth() +"-"+ getDay()+"\n历史上的今天 发生了以下著名事件");
+        titleDate.setText(getYear() +"-"+ getMonth() +"-"+ getDay());
         //获取当前的时间
         mPresenter.todayInHistory(String.valueOf(getMonth()),String.valueOf(getDay()));
 
@@ -117,6 +118,11 @@ public class TodayInHistoryActivity extends BaseActivity<MainPresenter> implemen
     public void showTodayInHistory(TodayHistoryBean todayHistoryBean) {
         mData.addAll(todayHistoryBean.getResult());
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showAstroFortune(AstroFortuneBean astroFortuneBean) {
+
     }
 
     /**

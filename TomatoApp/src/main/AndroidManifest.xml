@@ -20,7 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".mvp.ui.activity.AboutUsActivity"></activity>
+        <activity android:name=".mvp.ui.activity.AstroFortuneActivity"></activity>
+        <activity android:name=".mvp.ui.activity.AboutUsActivity" />
         <activity android:name=".mvp.ui.activity.ShowHtmlActivity" />
         <activity android:name=".mvp.ui.activity.TodayInHistoryActivity" />
         <activity android:name=".mvp.ui.activity.SearchNewsActivity" />

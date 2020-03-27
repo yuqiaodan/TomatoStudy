@@ -21,6 +21,7 @@ import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import swust.yuqiaodan.tomatoapp.app.Constants;
 import swust.yuqiaodan.tomatoapp.app.utils.RxUtils;
 import swust.yuqiaodan.tomatoapp.mvp.contract.MainContract;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.AstroFortuneBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.ChatBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuRobotQaBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuSearchNewsBean;
@@ -88,8 +89,16 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
                         mRootView.showTodayInHistory(todayHistoryBean);
                     }
                 });
+    }
 
-
+    public void getAstroFortune(String astroid, String date){
+        RxUtils.apply(mModel.getAstroFortune(astroid,date), mRootView)
+                .subscribe(new ErrorHandleSubscriber<AstroFortuneBean>(mErrorHandler) {
+                    @Override
+                    public void onNext(AstroFortuneBean astroFortuneBean) {
+                        mRootView.showAstroFortune(astroFortuneBean);
+                    }
+                });
 
     }
 

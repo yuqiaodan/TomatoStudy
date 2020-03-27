@@ -5,6 +5,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.AstroFortuneBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.BaseRedponseData;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.BaseResponse;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuNewsBean;
@@ -66,5 +67,15 @@ public interface Api {
     @GET(JISUDATA_BASEURL + "todayhistory/query")
     Observable<TodayHistoryBean> todayInHistory(@Query("appkey") String appkey, @Query("month") String month, @Query("day") String day);
 
+
+    /**
+     * @param astroid 星座id  1~12
+     * @param date    时间 例 2019-3-22
+     * @param appkey
+     * @return
+     */
+    //星座运势查询
+    @GET(JISUDATA_BASEURL + "astro/fortune")
+    Observable<AstroFortuneBean> getAstroFortune(@Query("astroid") String astroid, @Query("date") String date, @Query("appkey") String appkey);
 
 }
