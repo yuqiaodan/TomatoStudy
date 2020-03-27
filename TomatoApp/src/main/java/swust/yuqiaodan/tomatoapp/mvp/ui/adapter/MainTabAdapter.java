@@ -11,7 +11,7 @@ import android.widget.BaseAdapter;
 import java.util.List;
 
 public class MainTabAdapter extends FragmentPagerAdapter {
-    private String[] mTitles = new String[]{"首页", "视频", "个人中心"};
+    private String[] mTitles = new String[]{"首页", "小 i 机器人", "其他功能"};
     private List<Fragment> fragments;
 
     public MainTabAdapter(FragmentManager fm) {

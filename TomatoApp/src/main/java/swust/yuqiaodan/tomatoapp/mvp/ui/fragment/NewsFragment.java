@@ -15,9 +15,12 @@ import android.view.ViewGroup;
 import com.jess.arms.base.BaseFragment;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
+import com.scwang.smartrefresh.header.DropBoxHeader;
+import com.scwang.smartrefresh.header.FlyRefreshHeader;
 import com.scwang.smartrefresh.header.WaterDropHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -30,7 +33,6 @@ import java.util.List;
 import butterknife.BindView;
 import swust.yuqiaodan.tomatoapp.di.component.DaggerNewsComponent;
 import swust.yuqiaodan.tomatoapp.mvp.contract.NewsContract;
-import swust.yuqiaodan.tomatoapp.mvp.model.entity.JokeEntity;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.NewsBean;
 import swust.yuqiaodan.tomatoapp.mvp.presenter.NewsPresenter;
 
@@ -47,17 +49,15 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
 @SuppressLint("ValidFragment")
 public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsContract.View {
 
-    @BindView(R.id.recyclerView)
+    @BindView(R.id.recyclerView_News)
     RecyclerView mRecyclerView;
-    @BindView(R.id.refreshLayout)
+    @BindView(R.id.refreshLayout_News)
     SmartRefreshLayout refreshLayout;
 
     List<NewsBean> mData;
     NewsAdapter mAdapter;
-
     private int page;//分页发送请求（页数） 每页默认10条新闻 在P中修改
-
-    private  String channel;
+    public String channel;
 
      @SuppressLint("ValidFragment")
      public NewsFragment(String channel){
@@ -84,24 +84,24 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
     public void initData(@Nullable Bundle savedInstanceState) {
         RxTool.init(this.mContext);
 
-        page = 1;
+        //page = 1;
         initRefreshLayout();
         initRecycleView();
-
-        mPresenter.getNews(channel,page);
+        refreshLayout.autoRefresh();//直接自动刷新 同时就显示了加载动画了
+        //mPresenter.getNews(channel,page);
 
     }
 
     void initRefreshLayout() {
         //设置加载头和脚样式
-        refreshLayout.setRefreshHeader(new WaterDropHeader(this.mContext));
-        refreshLayout.setRefreshFooter(new ClassicsFooter(this.mContext));
+        refreshLayout.setRefreshHeader(new DropBoxHeader(this.mContext));
+            refreshLayout.setRefreshFooter(new BallPulseFooter(this.mContext));
 
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
 
-                page = 1+10;
+                page = 1;
 
                 mPresenter.getNews(channel,page);
 
@@ -111,7 +111,7 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
-                page = page + 1;
+                page = page + 10;
                 mPresenter.getNews(channel,page);
                 refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
             }
@@ -144,7 +144,10 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
 
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 
     @Override
     public void showNews(List<NewsBean> data) {

@@ -13,5 +13,6 @@ package swust.yuqiaodan.tomatoapp.app;
  * ================================================
  */
 public interface EventBusTags {
+    String RECOVERYKEYBOARD = "Recovery_of_the_keyboard";
 
 }

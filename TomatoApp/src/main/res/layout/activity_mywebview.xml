@@ -36,14 +36,14 @@
                 android:layout_weight="1"
                 android:background="@color/mainBlue"
                 android:gravity="center_vertical|center_horizontal"
-                android:hint="WebView"
+                android:hint=""
                 android:inputType="textMultiLine|textNoSuggestions"
                 android:isScrollContainer="false"
                 android:maxLength="240"
                 android:padding="5dp"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white"
-                android:textSize="22sp" />
+                android:textSize="17sp" />
 
         </LinearLayout>
 

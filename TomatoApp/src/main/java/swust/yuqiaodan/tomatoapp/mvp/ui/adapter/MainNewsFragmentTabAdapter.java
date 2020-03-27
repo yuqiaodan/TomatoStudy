@@ -8,18 +8,19 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.List;
 
 import swust.yuqiaodan.tomatoapp.app.Constants;
+import swust.yuqiaodan.tomatoapp.mvp.ui.fragment.NewsFragment;
 
 //首页新闻fragment适配器
 public class MainNewsFragmentTabAdapter extends FragmentPagerAdapter {
-    private String[] mTitles = Constants.getChannelSelected().toArray(new String[0]);
+    private String[] mTitles;
 
-    private List<Fragment> fragments;
+    private List<NewsFragment> fragments;
 
     public MainNewsFragmentTabAdapter(FragmentManager fm) {
         super(fm);
     }
 
-    public void setFragments(List<Fragment> fragments) {
+    public void setFragments(List<NewsFragment> fragments) {
         this.fragments = fragments;
     }
 

@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.jess.arms.base.BaseHolder;
 import com.jess.arms.base.DefaultAdapter;
 
@@ -46,7 +47,10 @@ public class MainMenuAdapter extends DefaultAdapter<ModelMainItem> {
         @Override
         public void setData(@NonNull ModelMainItem data, int position) {
             tv_name.setText(data.getName());
-            //meun_imageView.setImage();
+            Glide.with(itemView.getContext())
+                    .load(data.getImage())
+                    .thumbnail(0.5f).
+                    into(meun_imageView);
         }
     }
 

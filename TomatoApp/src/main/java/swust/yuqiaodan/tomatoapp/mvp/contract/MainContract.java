@@ -4,6 +4,11 @@ import com.jess.arms.mvp.IView;
 import com.jess.arms.mvp.IModel;
 
 import io.reactivex.Observable;
+import retrofit2.http.Query;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.AstroFortuneBean;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.ChatBean;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuRobotQaBean;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.TodayHistoryBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.WeatherEntity;
 
 
@@ -23,10 +28,21 @@ public interface MainContract {
     //对于经常使用的关于UI的方法可以定义到IView中,如显示隐藏进度条,和显示文字消息
     interface View extends IView {
         void showWeather(WeatherEntity weatherEntity);
+
+        void showChatContent(ChatBean chatBean);
+
+        void showTodayInHistory(TodayHistoryBean todayHistoryBean);
+
+        void showAstroFortune(AstroFortuneBean astroFortuneBean);
     }
 
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
     interface Model extends IModel {
         Observable<WeatherEntity> getWeather(String version, String city);
+
+        Observable<JiSuRobotQaBean> chatWithRobot(String question);
+
+        Observable<TodayHistoryBean> todayInHistory(String month,String day);
+        Observable<AstroFortuneBean> getAstroFortune(String astroid,String date);
     }
 }

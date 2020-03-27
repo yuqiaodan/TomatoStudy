@@ -8,6 +8,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.BaseResponse;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuNewsBean;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuSearchNewsBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JokeEntity;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.NewsBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.OpenApiNewsBean;
@@ -40,6 +41,8 @@ public interface NewsContract {
         Observable<JiSuNewsBean> getJiSuNews(String channel, int page);
 
         Observable<BaseResponse<List<JokeEntity>>> getJoke(int page, int count, String type);
+
+        Observable<JiSuSearchNewsBean> searchNews(String keyword);
 
     }
 }

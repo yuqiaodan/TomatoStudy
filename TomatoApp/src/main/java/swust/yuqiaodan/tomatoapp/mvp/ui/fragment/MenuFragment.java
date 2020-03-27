@@ -27,14 +27,16 @@ import cn.bingoogolapple.bgabanner.BGALocalImageSize;
 import swust.yuqiaodan.tomatoapp.R;
 import swust.yuqiaodan.tomatoapp.di.component.DaggerMainComponent;
 import swust.yuqiaodan.tomatoapp.mvp.contract.MainContract;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.AstroFortuneBean;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.ChatBean;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.TodayHistoryBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.WeatherEntity;
 import swust.yuqiaodan.tomatoapp.mvp.presenter.MainPresenter;
 import swust.yuqiaodan.tomatoapp.mvp.ui.UiModel.ModelMainItem;
-import swust.yuqiaodan.tomatoapp.mvp.ui.activity.MusicActivity;
+import swust.yuqiaodan.tomatoapp.mvp.ui.activity.AboutUsActivity;
+import swust.yuqiaodan.tomatoapp.mvp.ui.activity.AstroFortuneActivity;
 import swust.yuqiaodan.tomatoapp.mvp.ui.activity.PicActivity;
-import swust.yuqiaodan.tomatoapp.mvp.ui.activity.MyTakePhotoActivity;
-import swust.yuqiaodan.tomatoapp.mvp.ui.activity.ScanQRActivity;
-import swust.yuqiaodan.tomatoapp.mvp.ui.activity.ServiceStudy.ServiceStudyActivity;
+import swust.yuqiaodan.tomatoapp.mvp.ui.activity.TodayInHistoryActivity;
 import swust.yuqiaodan.tomatoapp.mvp.ui.adapter.MainMenuAdapter;
 
 public class MenuFragment extends BaseFragment<MainPresenter> implements MainContract.View {
@@ -78,12 +80,12 @@ public class MenuFragment extends BaseFragment<MainPresenter> implements MainCon
 
     void initRecycleView() {
         mData = new ArrayList<>();
-        mData.add(new ModelMainItem("音乐", R.drawable.pikachu_sit, MusicActivity.class));
-        mData.add(new ModelMainItem("拍照的艺术", R.drawable.pikachu_sit, MyTakePhotoActivity.class));
-        mData.add(new ModelMainItem("Retrofit学习", R.drawable.pikachu_sit, null));
-        mData.add(new ModelMainItem("扫码的艺术", R.drawable.pikachu_sit, ScanQRActivity.class));
-        mData.add(new ModelMainItem("Service学习", R.drawable.pikachu_sit, ServiceStudyActivity.class));
-        mData.add(new ModelMainItem("EventBus学习", R.drawable.pikachu_sit, null));
+        mData.add(new ModelMainItem("历史上的今天", R.drawable.history_icon, TodayInHistoryActivity.class));
+        mData.add(new ModelMainItem("关于我", R.drawable.about_us_icon, AboutUsActivity.class));
+        mData.add(new ModelMainItem("星座占卜", R.drawable.stars_icon, AstroFortuneActivity.class));
+        mData.add(new ModelMainItem("null", R.drawable.pikachu_sit, null));
+        mData.add(new ModelMainItem("null", R.drawable.pikachu_sit, null));
+        mData.add(new ModelMainItem("null", R.drawable.pikachu_sit, null));
         mData.add(new ModelMainItem("null", R.drawable.pikachu_sit, null));
         mData.add(new ModelMainItem("null", R.drawable.pikachu_sit, null));
         mData.add(new ModelMainItem("null", R.drawable.pikachu_sit, null));
@@ -143,12 +145,27 @@ public class MenuFragment extends BaseFragment<MainPresenter> implements MainCon
     }
 
     @Override
-    public void showWeather(WeatherEntity weatherEntity) {//天气接口错误 以后再说
+    public void showWeather(WeatherEntity weatherEntity) {
         String tem_value;
         tem_value = weatherEntity.getData().get(0).getTem2() + "~" + weatherEntity.getData().get(0).getTem1();
         tem.setText(tem_value);
         city.setText(weatherEntity.getCity());
         weather.setText(weatherEntity.getData().get(0).getWea());
+
+    }
+
+    @Override
+    public void showChatContent(ChatBean chatBean) {
+
+    }
+
+    @Override
+    public void showTodayInHistory(TodayHistoryBean todayHistoryBean) {
+
+    }
+
+    @Override
+    public void showAstroFortune(AstroFortuneBean astroFortuneBean) {
 
     }
 
