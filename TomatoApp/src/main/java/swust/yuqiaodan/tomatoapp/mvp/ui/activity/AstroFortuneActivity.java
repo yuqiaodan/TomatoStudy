@@ -10,7 +10,11 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -86,6 +90,14 @@ public class AstroFortuneActivity extends BaseActivity<MainPresenter> implements
 
     private AlertDialog.Builder builder;
 
+    String todayFortuneMsg;
+    String tomorrowFortuneMsg;
+
+    String weekFortuneMsg;
+    String monthFortuneMsg;
+    String yearFortuneMsg;
+
+
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerMainComponent //如找不到该类,请编译一下项目
@@ -135,13 +147,55 @@ public class AstroFortuneActivity extends BaseActivity<MainPresenter> implements
         tomorrowContent.setText(data.getTomorrow().getPresummary());
         tomorrowTime.setText(data.getTomorrow().getDate());
 
+        AstroFortuneBean.ResultBean.TodayBean todayBean=data.getToday();
+        AstroFortuneBean.ResultBean.TomorrowBean tomorrowBean=data.getTomorrow();
+        AstroFortuneBean.ResultBean.WeekBean weekBean=data.getWeek();
+        AstroFortuneBean.ResultBean.MonthBean monthBean=data.getMonth();
+        AstroFortuneBean.ResultBean.YearBean yearBean=data.getYear();
+
+        todayFortuneMsg=todayBean.getDate()+"\n"
+                +"今日运势概述："+todayBean.getPresummary()+"\n"+"\n"
+                +"幸运颜色："+todayBean.getColor()+"\n"
+                +"幸运数字："+todayBean.getNumber()+"\n"
+                +"综合运势得分："+todayBean.getSummary()+"\n"
+                +"财运运势得分："+todayBean.getMoney()+"\n"
+                +"工作运势得分："+todayBean.getCareer()+"\n"
+                +"爱情运势得分："+todayBean.getLove()+"\n"
+                +"健康运势得分："+todayBean.getHealth();
+
+        tomorrowFortuneMsg=tomorrowBean.getDate()+"\n"
+                +"明日运势日概述："+tomorrowBean.getPresummary()+"\n"+"\n"
+                +"幸运颜色："+tomorrowBean.getColor()+"\n"
+                +"幸运数字："+tomorrowBean.getNumber()+"\n"
+                +"综合运势得分："+tomorrowBean.getSummary()+"\n"
+                +"财运运势得分："+tomorrowBean.getMoney()+"\n"
+                +"工作运势得分："+tomorrowBean.getCareer()+"\n"
+                +"爱情运势得分："+tomorrowBean.getLove()+"\n"
+                +"健康运势得分："+tomorrowBean.getHealth();
+
+        weekFortuneMsg="时间："+weekBean.getDate()+"\n"
+                +"财运："+weekBean.getMoney()+"\n"+"\n"
+                +"工作："+weekBean.getCareer()+"\n"+"\n"
+                +"爱情："+weekBean.getLove()+"\n"+"\n"
+                +"健康："+weekBean.getHealth();
+
+        monthFortuneMsg="时间："+monthBean.getDate()+"\n"
+                +"运势概述："+monthBean.getSummary()+"\n"+"\n"
+                +"财运："+monthBean.getMoney()+"\n"+"\n"
+                +"工作："+monthBean.getCareer()+"\n"+"\n"
+                +"爱情："+monthBean.getLove()+"\n"+"\n"
+                +"健康："+monthBean.getHealth();
+
+        yearFortuneMsg="时间："+yearBean.getDate()+"\n"
+                +"运势概述："+yearBean.getSummary()+"\n"+"\n"
+                +"财运："+yearBean.getMoney()+"\n"+"\n"
+                +"工作："+yearBean.getCareer()+"\n"+"\n"
+                +"爱情："+yearBean.getLove();
     }
 
 
     //填写星座信息模块
     public void initAstroInformation() {
-
-
         astroId = Constants.allStars.indexOf(astro);
         astroName.setText(astro);
         astroNameEn.setText(Constants.allStarsEnglishName.get(astroId));
@@ -153,25 +207,67 @@ public class AstroFortuneActivity extends BaseActivity<MainPresenter> implements
     }
 
 
-    @OnClick({R.id.layout_astro_information})
+    @OnClick({R.id.layout_astro_information,
+            R.id.layout_fortune_today,
+            R.id.layout_fortune_tomorrow,
+            R.id.tv_fortune_week,
+            R.id.tv_fortune_month,
+            R.id.tv_fortune_year,})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_astro_information:
                 //选择切换星座
-                Log.d("点击", "开始选择切换星座");
-                showList();
+                showAstroList();
                 break;
-
-
+            case R.id.layout_fortune_today:
+                showFortuneDialog(todayFortuneMsg);
+                break;
+            case R.id.layout_fortune_tomorrow:
+                showFortuneDialog(tomorrowFortuneMsg);
+                break;
+            case R.id.tv_fortune_week:
+                showFortuneDialog(weekFortuneMsg);
+                break;
+            case R.id.tv_fortune_month:
+                showFortuneDialog(monthFortuneMsg);
+                break;
+            case R.id.tv_fortune_year:
+                showFortuneDialog(yearFortuneMsg);
+                break;
         }
 
     }
 
+
+    /**
+     * @param msg Dialog展示信息的内容
+     */
+    public void showFortuneDialog(String msg){
+        builder = new AlertDialog.Builder(this).setIcon(Constants.allStarsIcon.get(astroId)).setTitle(astro)
+                .setMessage(msg).setNegativeButton("关闭", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+
+        //修改透明度 和 宽高（但是修改宽高好像是失效了）?
+        AlertDialog dialog=builder.create();
+        Window dialogWindow = dialog.getWindow();
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        //lp.height = 300;//高度
+        lp.alpha = 0.8f; // 透明度
+        dialogWindow.setAttributes(lp);
+        dialog.show();
+    }
+
+
+
+
     /**
      * 列表 dialog
      */
-    private void showList() {
-
+    public void showAstroList() {
         final String[] items = {
                 "白羊座 3-21~4-19",
                 "金牛座 4-20~5-20",
