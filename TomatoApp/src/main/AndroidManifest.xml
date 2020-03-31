@@ -20,7 +20,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".mvp.ui.activity.AstroFortuneActivity"></activity>
+        <activity android:name=".mvp.ui.activity.WelcomeScreenActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".mvp.ui.activity.AstroFortuneActivity" />
         <activity android:name=".mvp.ui.activity.AboutUsActivity" />
         <activity android:name=".mvp.ui.activity.ShowHtmlActivity" />
         <activity android:name=".mvp.ui.activity.TodayInHistoryActivity" />
@@ -41,11 +48,7 @@
         <activity android:name=".mvp.ui.activity.PicActivity" />
         <activity android:name=".mvp.ui.activity.ShowImageActivity" />
         <activity android:name=".mvp.ui.activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <!--
          只要依赖 AutoSize 就必须填写设计图尺寸, 否则报错, 不想使用 AutoSize 就不要依赖 AutoSize

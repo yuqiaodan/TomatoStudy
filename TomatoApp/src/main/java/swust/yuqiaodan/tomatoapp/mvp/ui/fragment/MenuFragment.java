@@ -34,6 +34,7 @@ import swust.yuqiaodan.tomatoapp.mvp.model.entity.WeatherEntity;
 import swust.yuqiaodan.tomatoapp.mvp.presenter.MainPresenter;
 import swust.yuqiaodan.tomatoapp.mvp.ui.UiModel.ModelMainItem;
 import swust.yuqiaodan.tomatoapp.mvp.ui.activity.AboutUsActivity;
+import swust.yuqiaodan.tomatoapp.mvp.ui.activity.WelcomeScreenActivity;
 import swust.yuqiaodan.tomatoapp.mvp.ui.activity.AstroFortuneActivity;
 import swust.yuqiaodan.tomatoapp.mvp.ui.activity.PicActivity;
 import swust.yuqiaodan.tomatoapp.mvp.ui.activity.TodayInHistoryActivity;
@@ -83,7 +84,7 @@ public class MenuFragment extends BaseFragment<MainPresenter> implements MainCon
         mData.add(new ModelMainItem("历史上的今天", R.drawable.history_icon, TodayInHistoryActivity.class));
         mData.add(new ModelMainItem("关于我", R.drawable.about_us_icon, AboutUsActivity.class));
         mData.add(new ModelMainItem("星座占卜", R.drawable.stars_icon, AstroFortuneActivity.class));
-        mData.add(new ModelMainItem("null", R.drawable.pikachu_sit, null));
+        mData.add(new ModelMainItem("动画学习", R.drawable.pikachu_sit, WelcomeScreenActivity.class));
         mData.add(new ModelMainItem("null", R.drawable.pikachu_sit, null));
         mData.add(new ModelMainItem("null", R.drawable.pikachu_sit, null));
         mData.add(new ModelMainItem("null", R.drawable.pikachu_sit, null));
