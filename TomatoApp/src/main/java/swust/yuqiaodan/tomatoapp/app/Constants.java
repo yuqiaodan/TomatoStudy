@@ -50,11 +50,15 @@ public class Constants {
             "健康",
             "育儿"));
 
-    //目前默认必须选择以下三个频道
+    //目前默认一开始选择以下频道
     public static final Set<String> channelDefaultSelected = new HashSet<String>(Arrays.asList(
             "头条",
             REALTIME,
-            "新闻"
+            "新闻",
+            "国内",
+            "国际",
+            "政治",
+            "财经"
     ));
 
 

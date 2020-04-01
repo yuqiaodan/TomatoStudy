@@ -10,6 +10,7 @@ import swust.yuqiaodan.tomatoapp.mvp.contract.PicContract;
 
 import com.jess.arms.di.scope.ActivityScope;
 
+import swust.yuqiaodan.tomatoapp.mvp.ui.activity.JokeActivity;
 import swust.yuqiaodan.tomatoapp.mvp.ui.activity.PicActivity;
 
 
@@ -29,6 +30,7 @@ import swust.yuqiaodan.tomatoapp.mvp.ui.activity.PicActivity;
 @Component(modules = PicModule.class, dependencies = AppComponent.class)
 public interface PicComponent {
     void inject(PicActivity activity);
+    void inject(JokeActivity activity);
 
     @Component.Builder
     interface Builder {

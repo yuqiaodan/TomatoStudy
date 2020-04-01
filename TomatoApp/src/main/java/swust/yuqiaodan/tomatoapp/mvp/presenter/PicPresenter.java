@@ -56,6 +56,10 @@ public class PicPresenter extends BasePresenter<PicContract.Model, PicContract.V
 
     }
 
+    public void getTextJoke(){}
+
+    public void getPicJoke(){}
+
     @Override
     public void onDestroy() {
         super.onDestroy();
