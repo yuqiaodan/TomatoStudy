@@ -7,9 +7,13 @@ import com.jess.arms.di.scope.ActivityScope;
 import java.util.List;
 import javax.inject.Inject;
 import io.reactivex.Observable;
+import swust.yuqiaodan.tomatoapp.app.Constants;
 import swust.yuqiaodan.tomatoapp.mvp.contract.PicContract;
 import swust.yuqiaodan.tomatoapp.mvp.model.api.Api;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.BaseRedponseData;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuBaseResponse;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuPicJokeBean;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuTextJokeBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.PicEntity;
 
 
@@ -45,8 +49,19 @@ public class PicModel extends BaseModel implements PicContract.Model {
     }
 
     @Override
-    public Observable<BaseRedponseData<List<PicEntity>>> getPic() {
+    public Observable<PicEntity> getPic() {
         return mRepositoryManager
                 .obtainRetrofitService(Api.class).getPic(String.valueOf(0));
+    }
+
+    @Override
+    public Observable<JiSuBaseResponse<JiSuTextJokeBean>> getTextJoke() {
+        return mRepositoryManager.obtainRetrofitService(Api.class).getTextJoke("1","10","rand", Constants.JISU_APP_KEY);
+    }
+
+    @Override
+    public Observable<JiSuBaseResponse<JiSuPicJokeBean>> getPicJoke() {
+        return mRepositoryManager.obtainRetrofitService(Api.class).getPicJoke("1","10","rand", Constants.JISU_APP_KEY);
+
     }
 }

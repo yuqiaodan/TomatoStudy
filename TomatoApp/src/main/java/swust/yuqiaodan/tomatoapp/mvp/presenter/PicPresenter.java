@@ -22,16 +22,10 @@ import swust.yuqiaodan.tomatoapp.mvp.model.entity.PicEntity;
 
 
 /**
- * ================================================
- * Description:
- * <p>
- * Created by MVPArmsTemplate on 08/26/2019 18:28
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
- * <a href="https://github.com/JessYanCoding/MVPArms">Star me</a>
- * <a href="https://github.com/JessYanCoding/MVPArms/wiki">See me</a>
- * <a href="https://github.com/JessYanCoding/MVPArmsTemplate">模版请保持更新</a>
- * ================================================
+ Pic本来是用于图片的请求的 但如你所见 现在完整的一套MVP架构
+ 只请求一个接口 只服务于一个界面 实在是有点杀鸡用户牛刀
+ 所以现在将Pic的整个MVP架构重新定义功能 服务于Menu菜单的扩展界面 比如笑话，脑筋急转弯等等
+ （随着服务的界面增多 再考虑新建MVP架构）
  */
 @ActivityScope
 public class PicPresenter extends BasePresenter<PicContract.Model, PicContract.View> {
@@ -51,12 +45,12 @@ public class PicPresenter extends BasePresenter<PicContract.Model, PicContract.V
 
     public void getPic(boolean isRefresh){
         RxUtils.apply(mModel.getPic(),mRootView)
-                .subscribe(new ErrorHandleSubscriber<BaseRedponseData<List<PicEntity>>>(mErrorHandler){
+                .subscribe(new ErrorHandleSubscriber<PicEntity>(mErrorHandler){
                     @Override
-                    public void onNext(BaseRedponseData<List<PicEntity>> listBaseResponse) {
+                    public void onNext(PicEntity picEntity) {
                        if(isRefresh)
-                       {mRootView.showData(listBaseResponse.getData());}
-                       else {mRootView.showMoreData(listBaseResponse.getData());}
+                       {mRootView.showData(picEntity.getResult());}
+                       else {mRootView.showMoreData(picEntity.getResult());}
                     }
                 });
 

@@ -8,9 +8,12 @@ import retrofit2.http.Query;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.AstroFortuneBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.BaseRedponseData;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.BaseResponse;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuBaseResponse;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuNewsBean;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuPicJokeBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuRobotQaBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuSearchNewsBean;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuTextJokeBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JokeEntity;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.OpenApiNewsBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.PicEntity;
@@ -24,9 +27,8 @@ import swust.yuqiaodan.tomatoapp.mvp.model.entity.WeatherEntity;
  */
 
 public interface Api {
-    //新闻等来源一：OpenApi 网易新闻
+    //新闻来源一：OpenApi 网易新闻
     String APP_DOMAIN = "https://api.apiopen.top/";
-    String APIOPEN_BASEURL_1 = "https://www.apiopen.top/";
     //天气数据来源
     String WEATHER_API = "https://www.tianqiapi.com/api";
     //极速数据baseurl 新闻来源二
@@ -41,8 +43,8 @@ public interface Api {
     Observable<BaseResponse<List<JokeEntity>>> getJoke(@Query("page") String page, @Query("count") String count, @Query("type") String type);
 
     //获取美图 当page=0时，会随机返回一页数据，page>=1时会返回相应页码的数据。
-    @GET(APIOPEN_BASEURL_1 + "meituApi")
-    Observable<BaseRedponseData<List<PicEntity>>> getPic(@Query("page") String page);
+    @GET("https://api.apiopen.top/getImages")
+    Observable<PicEntity> getPic(@Query("page") String page);
 
     //获取天气接口
     //version为请求类型 默认v1（每天免费3w次）,city城市名如：成都 （不是成都市）
@@ -77,5 +79,20 @@ public interface Api {
     //星座运势查询
     @GET(JISUDATA_BASEURL + "astro/fortune")
     Observable<AstroFortuneBean> getAstroFortune(@Query("astroid") String astroid, @Query("date") String date, @Query("appkey") String appkey);
+
+
+    /**
+     * @param pagenum  页码
+     * @param pagesize  每页条数 最大20
+     * @param sort  排序 addtime按时间倒叙 rand随机获取
+     * sort=rand时，pagenum无效
+     * @param appkey
+     * @return
+     */
+    @GET(JISUDATA_BASEURL+"xiaohua/text")
+    Observable<JiSuBaseResponse<JiSuTextJokeBean>> getTextJoke(@Query("pagenum") String pagenum, @Query("pagesize") String pagesize, @Query("sort") String sort,@Query("appkey") String appkey);
+    @GET(JISUDATA_BASEURL+"xiaohua/pic")
+    Observable<JiSuBaseResponse<JiSuPicJokeBean>> getPicJoke(@Query("pagenum") String pagenum, @Query("pagesize") String pagesize,@Query("sort") String sort, @Query("appkey") String appkey);
+
 
 }

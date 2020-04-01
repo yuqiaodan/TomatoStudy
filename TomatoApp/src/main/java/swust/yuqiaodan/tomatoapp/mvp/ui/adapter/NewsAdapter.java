@@ -2,6 +2,8 @@ package swust.yuqiaodan.tomatoapp.mvp.ui.adapter;
 
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -55,10 +57,17 @@ public class NewsAdapter extends DefaultAdapter<NewsBean> {
             newsSource.setText(data.getSource());
             newsTime.setText(data.getTime());
 
-            Glide.with(itemView.getContext()).load(data.getImageUrl())
-                    .thumbnail(Glide.with(itemView.getContext()).load(R.drawable.loding))
+            Glide.with(itemView.getContext())//使用最小的context（最小其实是imageView的）
+                    .asDrawable()//asDrawable()比默认的bitmap占用内存小
+                    .load(data.getImageUrl())//图片url
+                    .thumbnail(Glide.with(itemView.getContext())
+                            .load(R.drawable.loding))//加载中的占位图
                     .into(newsImg);
 
+            //添加itemView的动画 这里是直接为整个itemView添加一个动画
+            //也可以为itemView中的局部View 比如ImageView添加动画
+            Animation animation = AnimationUtils.loadAnimation(itemView.getContext(),R.anim.scale_50_to_100);
+            itemView.startAnimation(animation);
         }
     }
 }

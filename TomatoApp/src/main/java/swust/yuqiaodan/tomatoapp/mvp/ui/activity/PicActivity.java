@@ -56,7 +56,7 @@ public class PicActivity extends BaseActivity<PicPresenter> implements PicContra
     RecyclerView recyclerView;
     @BindView(R.id.pic_refreshlayout)
     SmartRefreshLayout refreshLayout;
-    List<PicEntity> mData;
+    List<PicEntity.ResultBean> mData;
     PicAdapter mAdapter;
 
 
@@ -130,7 +130,7 @@ public class PicActivity extends BaseActivity<PicPresenter> implements PicContra
         recyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener((view, viewType, data, position) -> {
             Intent intent=new Intent(getContext(), ShowImageActivity.class);
-            intent.putExtra("image",mData.get(position).getUrl());
+            intent.putExtra("image",mData.get(position).getImg());
             startActivity(intent);
         });
 
@@ -154,15 +154,20 @@ public class PicActivity extends BaseActivity<PicPresenter> implements PicContra
     }
 
     @Override
-    public void showData(List<PicEntity> data) {
+    public void showData(List<PicEntity.ResultBean> data) {
         mData.clear();
         mData.addAll(data);
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void showMoreData(List<PicEntity> data) {
+    public void showMoreData(List<PicEntity.ResultBean> data) {
+        //记录当前的最底部的item位置
+        int position=mData.size()-1;
+        //增加数据
         mData.addAll(data);
-        mAdapter.notifyDataSetChanged();
+        //只调用notifyItemRangeChanged方法 刷新之后新添加进来的数据的item
+        //这样就不会导致动画重复
+        mAdapter.notifyItemRangeChanged(position+1,data.size());
     }
 }

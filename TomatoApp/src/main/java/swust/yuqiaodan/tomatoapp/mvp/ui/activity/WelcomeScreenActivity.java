@@ -4,11 +4,16 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.vondear.rxtool.RxBarTool;
+import com.vondear.rxtool.RxTool;
 
 import java.util.concurrent.TimeUnit;
 
@@ -26,30 +31,18 @@ public class WelcomeScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animation_study);
+        RxTool.init(this);
+        //适配全面屏 有冲突 暂不启用
+        RxBarTool.setTransparentStatusBar(this);
+
         textView=findViewById(R.id.tv_view_animation);
         imageView=findViewById(R.id.img_tomato_animation);
-
         Animation animation_icon = AnimationUtils.loadAnimation(WelcomeScreenActivity.this,R.anim.lunch_page_icon_animation);
         Animation animation_title = AnimationUtils.loadAnimation(WelcomeScreenActivity.this,R.anim.lunch_page_title_animation);
         animation_icon.setFillAfter(true);
         animation_title.setFillAfter(true);
         imageView.startAnimation(animation_icon);
         textView.startAnimation(animation_title);
-
-        textView.setOnClickListener(view -> {
-            //保持动画结束后的效果
-            //animation.setFillAfter(true);
-            textView.startAnimation(animation_title);
-        });
-
-        imageView.setOnClickListener(view -> {
-            //保持动画结束后的效果
-            //animation.setFillAfter(true);
-            imageView.startAnimation(animation_icon);
-
-        });
-
-
         animation_icon.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {

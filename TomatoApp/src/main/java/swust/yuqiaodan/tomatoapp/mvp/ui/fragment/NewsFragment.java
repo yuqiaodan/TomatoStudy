@@ -153,9 +153,14 @@ public class NewsFragment extends BaseFragment<NewsPresenter> implements NewsCon
     public void showNews(List<NewsBean> data) {
         if (page == 1) {//如果是第一页去请求 则是刷新
             mData.clear();
+            mData.addAll(data);
+            mAdapter.notifyDataSetChanged();
+            return;
         }
+
+        int position=mData.size()-1;
         mData.addAll(data);
-        mAdapter.notifyDataSetChanged();
+        mAdapter.notifyItemRangeChanged(position+1,data.size());
     }
 
 
