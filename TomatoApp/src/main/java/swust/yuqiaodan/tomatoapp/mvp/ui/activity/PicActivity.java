@@ -28,6 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 import swust.yuqiaodan.tomatoapp.di.component.DaggerPicComponent;
 import swust.yuqiaodan.tomatoapp.mvp.contract.PicContract;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.JokeShowBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.PicEntity;
 import swust.yuqiaodan.tomatoapp.mvp.presenter.PicPresenter;
 
@@ -169,5 +170,10 @@ public class PicActivity extends BaseActivity<PicPresenter> implements PicContra
         //只调用notifyItemRangeChanged方法 刷新之后新添加进来的数据的item
         //这样就不会导致动画重复
         mAdapter.notifyItemRangeChanged(position+1,data.size());
+    }
+
+    @Override
+    public void showJoke(List<JokeShowBean> data) {
+
     }
 }

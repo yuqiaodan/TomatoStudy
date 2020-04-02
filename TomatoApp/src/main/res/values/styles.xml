@@ -18,4 +18,13 @@
     <style name="TabLayoutTextStyle">
         <item name="android:textSize">10sp</item>
     </style>
+
+    <style name="CardJokeButton">
+        <item name="android:textSize">15sp</item>
+        <item name="android:background">@drawable/shape_round_main_blue</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+
+        <item name="android:layout_margin">3dp</item>
+    </style>
 </resources>

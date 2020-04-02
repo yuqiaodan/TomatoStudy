@@ -11,6 +11,7 @@ import swust.yuqiaodan.tomatoapp.mvp.model.entity.BaseRedponseData;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuBaseResponse;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuPicJokeBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.JiSuTextJokeBean;
+import swust.yuqiaodan.tomatoapp.mvp.model.entity.JokeShowBean;
 import swust.yuqiaodan.tomatoapp.mvp.model.entity.PicEntity;
 
 
@@ -31,6 +32,7 @@ public interface PicContract {
     interface View extends IView {
         void showData(List<PicEntity.ResultBean> data);
         void showMoreData(List<PicEntity.ResultBean> data);
+        void showJoke(List<JokeShowBean> data);
     }
 
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
@@ -38,6 +40,7 @@ public interface PicContract {
         Observable<PicEntity> getPic();
         Observable<JiSuBaseResponse<JiSuTextJokeBean>> getTextJoke();
         Observable<JiSuBaseResponse<JiSuPicJokeBean>> getPicJoke();
+
 
     }
 }

@@ -54,14 +54,15 @@ public class PicModel extends BaseModel implements PicContract.Model {
                 .obtainRetrofitService(Api.class).getPic(String.valueOf(0));
     }
 
+    //笑话接口 随机获取rand 默认每页15条
     @Override
     public Observable<JiSuBaseResponse<JiSuTextJokeBean>> getTextJoke() {
-        return mRepositoryManager.obtainRetrofitService(Api.class).getTextJoke("1","10","rand", Constants.JISU_APP_KEY);
+        return mRepositoryManager.obtainRetrofitService(Api.class).getTextJoke("1","15","rand", Constants.JISU_APP_KEY);
     }
 
     @Override
     public Observable<JiSuBaseResponse<JiSuPicJokeBean>> getPicJoke() {
-        return mRepositoryManager.obtainRetrofitService(Api.class).getPicJoke("1","10","rand", Constants.JISU_APP_KEY);
+        return mRepositoryManager.obtainRetrofitService(Api.class).getPicJoke("1","15","rand", Constants.JISU_APP_KEY);
 
     }
 }

@@ -16,19 +16,19 @@ public class Constants {
     //极速api开放平台的appkey www.jisuapi.com
     public static final String JISU_APP_KEY = "35dc30ebaa5940ce";
 
-    public static final String LEFT="left";
-    public static final String RIGHT="right";
+    public static final String LEFT = "left";
+    public static final String RIGHT = "right";
 
-    public static final String QRResult="QRResult";
+    public static final String QRResult = "QRResult";
 
-    public static final String NEWSCHANNELS="NewsChannels";
-    public static final String HTMLCONTENT= "HtmlContent";
-    public static final String HTMLTITLE= "HtmlTitle";
-    public static final String ASTRO= "Astro";
+    public static final String NEWSCHANNELS = "NewsChannels";
+    public static final String HTMLCONTENT = "HtmlContent";
+    public static final String HTMLTITLE = "HtmlTitle";
+    public static final String ASTRO = "Astro";
 
     //以下两个频道来源不同
-    public static final String REALTIME="实时";
-    public static final String JOKE="搞笑";
+    public static final String REALTIME = "实时";
+    public static final String JOKE = "搞笑";
 
     public static final List<String> allChannelList = new ArrayList<>(Arrays.asList(
             "头条",
@@ -60,8 +60,6 @@ public class Constants {
             "政治",
             "财经"
     ));
-
-
 
 
     //这里应该保存在本地 目前就这样
@@ -144,9 +142,65 @@ public class Constants {
 
     ));
 
+    public static final List<Integer> CARD_COLOR = new ArrayList<Integer>(Arrays.asList(
+            R.color.yellow,
+            R.color.pink,
+            R.color.lightsalmon,
+            R.color.darkorange,
+            R.color.hotpink,
+            R.color.orangered,
+            R.color.crimson,
+            R.color.gainsboro,
+            R.color.powderblue,
+            R.color.lightsteelblue,
+            R.color.lightblue,
+            R.color.lightgreen,
+            R.color.blueviolet,
+            R.color.olive,
+            R.color.lawngreen,
+            R.color.green,
+            R.color.darkturquoise,
+            R.color.brown,
+            R.color.brown1,
+            R.color.brown2,
+            R.color.brown3,
+            R.color.orange,
+            R.color.gold,
+            R.color.lightpink,
+            R.color.darkseagreen,
+            R.color.cornflowerblue,
+            R.color.steelblue,
+            R.color.darkmagenta,
+            R.color.darkgoldenrod,
+            R.color.deeppink,
+            R.color.colorPrimary,
+            R.color.tomato,
+            R.color.darkgray,
+            R.color.mediumslateblue,
+            R.color.colorPrimaryDark,
+            R.color.moccasin,
+            R.color.fuchsia,
+            R.color.palevioletred,
+            R.color.orchid,
+            R.color.indianred,
+            R.color.mediumorchid,
+            R.color.palegreen,
+            R.color.darkmagenta,
+            R.color.lightslategray,
+            R.color.olivedrab,
+            R.color.slateblue,
+            R.color.mediumaquamarine,
+            R.color.darkslateblue,
+            R.color.darkslategray,
+            R.color.dodgerblue,
+            R.color.aqua,
+            R.color.darkblue,
+            R.color.darkviolet,
+            R.color.saddlebrown
+    ));
 
 
-    public static String getSource(){
+    public static String getSource() {
         return allSource.get(new Random().nextInt(allSource.size()));
 
     }

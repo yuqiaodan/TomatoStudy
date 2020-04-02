@@ -4,8 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/lightcyan"
     android:orientation="vertical"
     tools:context="swust.yuqiaodan.tomatoapp.mvp.ui.activity.JokeActivity">
+
+    <include
+        android:id="@+id/joke_title"
+        layout="@layout/include_title" />
 
     <com.vondear.rxui.view.cardstack.RxCardStackView
         android:id="@+id/stackview_main"
@@ -17,27 +23,45 @@
         android:paddingTop="12dp"
         android:paddingRight="12dp" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/gainsboro" />
+
     <LinearLayout
-        android:visibility="gone"
-        android:id="@+id/button_container"
+        android:id="@+id/button_turn_the_page"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-       >
+        android:padding="5dp"
+        android:visibility="gone">
+
         <Button
+            style="@style/CardJokeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="上一张"/>
+            android:onClick="onPreClick"
+            android:text="上一张" />
 
         <Button
+            style="@style/CardJokeButton"
+            android:id="@+id/btn_next_group_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="下一张"/>
+            android:text="换一组" />
 
+        <Button
+            style="@style/CardJokeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onNextClick"
+            android:text="下一张" />
     </LinearLayout>
+
 
 
     <LinearLayout
@@ -46,20 +70,31 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:visibility="gone"
+        android:padding="5dp"
         >
         <Button
+            android:id="@+id/btn_text_joke"
+            style="@style/CardJokeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="上一张"/>
+            android:text="文字笑话" />
 
         <Button
+            android:id="@+id/btn_next_group_1"
+            style="@style/CardJokeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="下一张"/>
+            android:text="换一组" />
 
+        <Button
+            android:id="@+id/btn_pic_joke"
+            style="@style/CardJokeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="图片笑话" />
     </LinearLayout>
 
 </LinearLayout>
