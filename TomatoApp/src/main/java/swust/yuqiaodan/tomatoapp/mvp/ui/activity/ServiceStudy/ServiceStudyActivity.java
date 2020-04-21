@@ -22,6 +22,7 @@ public class ServiceStudyActivity extends BaseActivity {
     Button start;
     @BindView(R.id.stopService)
     Button stop;
+
     Intent serviecIntent;
 
 

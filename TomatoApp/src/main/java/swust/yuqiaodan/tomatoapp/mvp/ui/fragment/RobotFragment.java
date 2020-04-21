@@ -116,7 +116,7 @@ public class RobotFragment extends BaseFragment<MainPresenter> implements MainCo
         //添加第一个默认对话
         ChatBean chatBean = new ChatBean();
         chatBean.setLocation(Constants.LEFT);
-        chatBean.setContent("您好，这里的您的专属聊天伙伴，小i机器人，我知天文晓地理，快来和我聊天呀");
+        chatBean.setContent("您好，这里是您的专属聊天伙伴，小i机器人，我知天文晓地理，快来和我聊天呀");
         mData.add(chatBean);
 
         mAdapter = new ChatAdapter(mData);

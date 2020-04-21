@@ -1,11 +1,14 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="QMUI.Compat.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/mainBlue</item>
         <item name="colorPrimaryDark">@color/mainBlue</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowAnimationStyle">@style/Animation_Activity</item>
+        <item name="qmui_config_color_blue">@color/mainBlue</item>
+
+
     </style>
 
     <style name="Animation_Activity">

@@ -1,5 +1,8 @@
 package swust.yuqiaodan.tomatoapp.mvp.ui.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.exoplayer2.util.Log;
 import com.vondear.rxtool.RxBarTool;
 import com.vondear.rxtool.RxTool;
 
@@ -21,10 +25,11 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import swust.yuqiaodan.tomatoapp.R;
+import swust.yuqiaodan.tomatoapp.mvp.ui.MyView.PointPicView;
 
 public class WelcomeScreenActivity extends AppCompatActivity {
     TextView textView;
-    ImageView imageView;
+    PointPicView imageView;
 
 
     @Override
@@ -32,33 +37,30 @@ public class WelcomeScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animation_study);
         RxTool.init(this);
-        //适配全面屏 有冲突 暂不启用
+        //适配全面屏
         RxBarTool.setTransparentStatusBar(this);
+        initView();
+    }
+
+    public void initView(){
 
         textView=findViewById(R.id.tv_view_animation);
         imageView=findViewById(R.id.img_tomato_animation);
-        Animation animation_icon = AnimationUtils.loadAnimation(WelcomeScreenActivity.this,R.anim.lunch_page_icon_animation);
+        //原本的视图动画 现在不启用了 改为视觉效果更好的属性动画
+/*        Animation animation_icon = AnimationUtils.loadAnimation(WelcomeScreenActivity.this,R.anim.lunch_page_icon_animation);
         Animation animation_title = AnimationUtils.loadAnimation(WelcomeScreenActivity.this,R.anim.lunch_page_title_animation);
         animation_icon.setFillAfter(true);
         animation_title.setFillAfter(true);
-        imageView.startAnimation(animation_icon);
         textView.startAnimation(animation_title);
-        animation_icon.setAnimationListener(new Animation.AnimationListener() {
+        imageView.startAnimation(animation_icon);*/
+
+
+        //动画结束后 跳转到主界面
+        imageView.getmAnimatorSet().addListener(new AnimatorListenerAdapter() {
             @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-
+            public void onAnimationEnd(Animator animator) {
+                Log.d("image动画","End");
                 jumpToMainActivity();
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
             }
         });
 
@@ -67,6 +69,7 @@ public class WelcomeScreenActivity extends AppCompatActivity {
 
     @SuppressLint("CheckResult")
     public void jumpToMainActivity(){
+        //结束后延迟1秒
             Observable.timer(500, TimeUnit.MILLISECONDS)//计时500毫秒
                     .observeOn(AndroidSchedulers.mainThread())//订阅在主线程 因为后续要对界面进行操作（也可以在其他线程）
                     .subscribe(
